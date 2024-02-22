@@ -64,17 +64,6 @@ fun ProductItem(product: Product) {
                     contentScale = ContentScale.Crop,
                     placeholder = painterResource(id = R.drawable.placeholder))
 
-                /*Image(
-                    // TODO: ajustar imagem do produto
-                    painter = painterResource(id = R.drawable.placeholder),
-                    contentDescription = null,
-                    Modifier
-                        .size(imageSize)
-                        .offset(y = imageSize / 2)
-                        .clip(shape = CircleShape)
-                        .align(Alignment.BottomCenter),
-                    contentScale = ContentScale.Crop
-                )*/
             }
             Spacer(modifier = Modifier.height(imageSize / 2))
             Column(Modifier.padding(16.dp)) {
