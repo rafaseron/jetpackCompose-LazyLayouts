@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -26,6 +27,7 @@ import br.com.alura.aluvery.extensions.toBrazilianCurrency
 import br.com.alura.aluvery.model.Product
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import java.math.BigDecimal
 
 @Composable
@@ -54,7 +56,10 @@ fun ProductItem(product: Product) {
                     .fillMaxWidth()
             ) {
 
-                AsyncImage(model = product.image,
+                AsyncImage(model = ImageRequest.Builder(LocalContext.current)
+                    .data(product.image)
+                    .crossfade(true)
+                    .build(),
                     contentDescription = null,
                     modifier = Modifier
                         .size(imageSize)
