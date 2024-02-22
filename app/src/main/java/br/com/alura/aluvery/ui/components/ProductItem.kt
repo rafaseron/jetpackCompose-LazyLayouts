@@ -56,11 +56,13 @@ fun ProductItem(product: Product) {
 
                 AsyncImage(model = product.image,
                     contentDescription = null,
-                    modifier = Modifier.size(imageSize)
+                    modifier = Modifier
+                        .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
                         .align(Alignment.BottomCenter),
-                    contentScale = ContentScale.Crop)
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.placeholder))
 
                 /*Image(
                     // TODO: ajustar imagem do produto
