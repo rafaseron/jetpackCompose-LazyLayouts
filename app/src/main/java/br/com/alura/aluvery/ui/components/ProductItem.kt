@@ -25,6 +25,7 @@ import br.com.alura.aluvery.R
 import br.com.alura.aluvery.extensions.toBrazilianCurrency
 import br.com.alura.aluvery.model.Product
 import br.com.alura.aluvery.ui.theme.AluveryTheme
+import coil.compose.AsyncImage
 import java.math.BigDecimal
 
 @Composable
@@ -52,7 +53,16 @@ fun ProductItem(product: Product) {
                     )
                     .fillMaxWidth()
             ) {
-                Image(
+
+                AsyncImage(model = product.image,
+                    contentDescription = null,
+                    modifier = Modifier.size(imageSize)
+                        .offset(y = imageSize / 2)
+                        .clip(shape = CircleShape)
+                        .align(Alignment.BottomCenter),
+                    contentScale = ContentScale.Crop)
+
+                /*Image(
                     // TODO: ajustar imagem do produto
                     painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = null,
@@ -62,7 +72,7 @@ fun ProductItem(product: Product) {
                         .clip(shape = CircleShape)
                         .align(Alignment.BottomCenter),
                     contentScale = ContentScale.Crop
-                )
+                )*/
             }
             Spacer(modifier = Modifier.height(imageSize / 2))
             Column(Modifier.padding(16.dp)) {
