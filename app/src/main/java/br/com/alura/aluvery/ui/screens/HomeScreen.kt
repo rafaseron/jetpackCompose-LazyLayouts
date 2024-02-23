@@ -20,9 +20,7 @@ import br.com.alura.aluvery.ui.components.ProductsSection
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 
 @Composable
-fun HomeScreen(
-    sections: Map<String, List<Product>>
-) {
+fun HomeScreen(sections: Map<String, List<Product>>) {
 
     LazyColumn(Modifier.fillMaxSize(),
         contentPadding = PaddingValues(top = 16.dp,
