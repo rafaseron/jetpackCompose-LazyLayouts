@@ -5,12 +5,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,16 +32,28 @@ import br.com.alura.aluvery.ui.theme.AluveryTheme
 @Composable
 fun HomeScreen(sections: Map<String, List<Product>>) {
 
-    LazyColumn(Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(top = 16.dp,
-            bottom = 90.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column {
+        var newValue by remember { mutableStateOf("Produto") }
 
-        for (section in sections){
-            item {
-                ProductsSection(title = section.key, products = section.value)
+        OutlinedTextField(modifier = Modifier
+            .padding(
+                start = 30.dp, top = 16.dp,
+                end = 30.dp)
+            .fillMaxWidth(1f),
+            value = newValue, onValueChange = { newValue = it })
+
+        LazyColumn(Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(top = 16.dp,
+                bottom = 90.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)) {
+
+            for (section in sections){
+                item {
+                    ProductsSection(title = section.key, products = section.value)
+                }
             }
         }
+
     }
 
     /*Column(
