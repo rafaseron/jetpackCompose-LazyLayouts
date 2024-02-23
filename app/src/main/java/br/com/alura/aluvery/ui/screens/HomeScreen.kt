@@ -33,14 +33,21 @@ import br.com.alura.aluvery.ui.theme.AluveryTheme
 fun HomeScreen(sections: Map<String, List<Product>>) {
 
     Column {
-        var newValue by remember { mutableStateOf("Produto") }
+        var texto by remember { mutableStateOf("Produto") }
 
         OutlinedTextField(modifier = Modifier
             .padding(
                 start = 30.dp, top = 16.dp,
                 end = 30.dp)
             .fillMaxWidth(1f),
-            value = newValue, onValueChange = { newValue = it })
+            value = texto, onValueChange = { newValue -> texto = newValue})
+
+        /* Modo de cima é didatico para mostrar que o newValue armazena
+         o novo valor serve para 'repassar' esse novo valor para o texto */
+        //FAZENDO DIRETO FICARIA:
+        //var newValue by remember { mutableStateOf("") }
+        //value = newValue
+        //onValueChange = { newValue = it}
 
         LazyColumn(Modifier.fillMaxSize(),
             contentPadding = PaddingValues(top = 16.dp,
