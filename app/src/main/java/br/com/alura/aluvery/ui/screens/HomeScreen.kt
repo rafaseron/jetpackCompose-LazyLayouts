@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -28,10 +29,12 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
     Column {
         var texto by remember { mutableStateOf("Produto") }
 
-        OutlinedTextField(modifier = Modifier
-            .padding(start = 30.dp, top = 16.dp, end = 30.dp)
-            .fillMaxWidth(1f),
-            value = texto, onValueChange = { newValue -> texto = newValue})
+        OutlinedTextField(value = texto,
+            onValueChange = { newValue -> texto = newValue},
+
+            modifier = Modifier.fillMaxWidth(1f)
+            .padding(start = 30.dp, top = 16.dp, end = 30.dp),
+            shape = RoundedCornerShape(percent = 100))
 
         /* Modo de cima é didatico para mostrar que o newValue armazena
          o novo valor serve para 'repassar' esse novo valor para o texto */
