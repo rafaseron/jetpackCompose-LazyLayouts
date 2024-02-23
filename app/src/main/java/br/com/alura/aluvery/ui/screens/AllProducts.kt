@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -30,16 +31,18 @@ fun AllProducts() {
         columns = GridCells.Adaptive(minSize = 170.dp)) {
 
         item {
-            Text(text = "Todos produtos", fontSize = 30.sp,
-                fontWeight = FontWeight(400))
-        }
+            Text(text = "Todos", fontSize = 30.sp,
+                fontWeight = FontWeight(400),
+                modifier = Modifier.offset(x = 16.dp)) }
 
-        item { Spacer(modifier = Modifier)}
+        item {
+            Text(text = "produtos", fontSize = 30.sp,
+            fontWeight = FontWeight(400),
+            modifier = Modifier.offset(x = -80.dp)) }
 
         for (produto in todosProdutos){
             item {
-                ProductItem(product = produto)
-            }
+                ProductItem(product = produto) }
         }
     }
 }
