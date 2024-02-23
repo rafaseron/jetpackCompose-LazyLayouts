@@ -67,3 +67,5 @@ val sampleSections = mapOf(
     "Doces" to sampleCandies,
     "Bebidas" to sampleDrinks
 )
+
+val todosProdutos: List<Product> = listOf(*sampleProducts.toTypedArray())
