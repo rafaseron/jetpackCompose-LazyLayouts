@@ -36,9 +36,7 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
         var texto by remember { mutableStateOf("Produto") }
 
         OutlinedTextField(modifier = Modifier
-            .padding(
-                start = 30.dp, top = 16.dp,
-                end = 30.dp)
+            .padding(start = 30.dp, top = 16.dp, end = 30.dp)
             .fillMaxWidth(1f),
             value = texto, onValueChange = { newValue -> texto = newValue})
 
