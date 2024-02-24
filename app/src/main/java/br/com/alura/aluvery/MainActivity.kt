@@ -7,6 +7,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.screens.HomeScreen
+import br.com.alura.aluvery.ui.screens.SearchScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,9 +23,8 @@ class MainActivity : ComponentActivity() {
 fun App() {
     AluveryTheme {
         Surface {
-            HomeScreen(
-                sampleSections
-            )
+            //HomeScreen(sampleSections)
+            SearchScreen(selections = sampleSections)
         }
     }
 }
