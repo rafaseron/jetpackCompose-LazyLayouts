@@ -38,7 +38,6 @@ fun CardProductItem(product: Product, elevation: Dp = 4.dp) {
                 Text(text = product.name)
                 Text(text = product.price.toBrazilianCurrency())
             }
-            // TODO: adicionar descrição do produto
             product.description?.let { Text(text = it, Modifier.padding(16.dp)) }
         }
     }
