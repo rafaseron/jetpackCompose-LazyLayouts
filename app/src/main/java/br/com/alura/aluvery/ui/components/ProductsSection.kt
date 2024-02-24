@@ -18,28 +18,15 @@ import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 
 @Composable
-fun ProductsSection(
-    title: String,
-    products: List<Product>
-) {
+fun ProductsSection(title: String, products: List<Product>) {
     Column {
-        Text(
-            text = title,
-            Modifier.padding(
-                start = 16.dp,
-                end = 16.dp
-            ),
-            fontSize = 20.sp,
-            fontWeight = FontWeight(400)
-        )
+        Text(text = title,
+            Modifier.padding(start = 16.dp, end = 16.dp),
+            fontSize = 20.sp, fontWeight = FontWeight(400))
 
-        LazyRow(
-            Modifier
-                .padding(top = 8.dp)
-                .fillMaxWidth(),
+        LazyRow(Modifier.padding(top = 8.dp).fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(start = 16.dp,
-                end = 16.dp)) {
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp)){
 
             /*for (p in products) {
                 item {
@@ -55,8 +42,7 @@ fun ProductsSection(
             */
 
             items(products){p->
-                ProductItem(product = p)
-            }
+                ProductItem(product = p) }
 
         }
 
