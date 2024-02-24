@@ -21,9 +21,14 @@ fun SearchSelection(cardlist: List<Product>) {
 
     LazyColumn(modifier = Modifier, contentPadding = PaddingValues(all = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)){
-        items(cardlist){
+
+        /*items(cardlist){
             p ->
             CardProductItem(product = p)
+        }*/
+
+        for (card in cardlist){
+            item { CardProductItem(product = card)}
         }
 
     }
