@@ -28,7 +28,7 @@ fun SearchSelection(cardlist: List<Product>) {
         }*/
 
         for (card in cardlist){
-            item { CardProductItem(product = card)}
+            item {CardProductItem(product = card)}
         }
 
     }
