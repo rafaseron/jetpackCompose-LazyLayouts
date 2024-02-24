@@ -19,6 +19,7 @@ import br.com.alura.aluvery.model.Product
 import br.com.alura.aluvery.sampledata.sampleProducts
 import coil.compose.AsyncImage
 import br.com.alura.aluvery.ui.theme.AluveryTheme
+import java.math.BigDecimal
 
 @Composable
 fun CardProductItem(product: Product, elevation: Dp = 4.dp) {
@@ -49,6 +50,19 @@ private fun CardProductItemPreview() {
     AluveryTheme {
         Surface {
             CardProductItem(product = sampleProducts.random())
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun CardProductItemPreviewWithDescription() {
+    AluveryTheme {
+        Surface {
+            CardProductItem(product = Product(name = "Teste de Produto",
+                price = BigDecimal(14.99),image = null,
+                description = "Sou uma descricao"
+            ))
         }
     }
 }
