@@ -41,7 +41,8 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
                 .padding(start = 30.dp, top = 16.dp, end = 30.dp),
             shape = RoundedCornerShape(percent = 100),
             leadingIcon = {Image(painter = painterResource(id = R.drawable.baseline_search_24), contentDescription = "Search")},
-            placeholder = { Text(text = "O que você procura?")})
+            placeholder = { Text(text = "O que você procura?")},
+            label = { Text(text = "Produto")})
 
         /* Modo de cima é didatico para mostrar que o newValue armazena
          o novo valor serve para 'repassar' esse novo valor para o texto */
