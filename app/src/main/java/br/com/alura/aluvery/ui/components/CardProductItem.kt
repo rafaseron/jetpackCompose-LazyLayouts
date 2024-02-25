@@ -1,6 +1,7 @@
 package br.com.alura.aluvery.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -25,25 +26,44 @@ import java.math.BigDecimal
 
 @Composable
 fun CardProductItem(product: Product, elevation: Dp = 4.dp) {
-    Card(Modifier.fillMaxWidth().heightIn(150.dp),
+
+    var maxLines by remember { mutableStateOf(2) }
+    var overFlow by remember { mutableStateOf(TextOverflow.Ellipsis) }
+    var expanded by remember { mutableStateOf(false) }
+
+    Card(Modifier.fillMaxWidth().heightIn(150.dp)
+        .clickable { expanded =! expanded },
         elevation = elevation) {
 
         Column {
             AsyncImage(model = product.image, contentDescription = null,
-                Modifier.fillMaxWidth().height(100.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
                 placeholder = painterResource(id = R.drawable.placeholder),
                 contentScale = ContentScale.Crop)
 
-            Column(Modifier.fillMaxWidth()
+            Column(
+                Modifier
+                    .fillMaxWidth()
                     .background(MaterialTheme.colors.primaryVariant)
                     .padding(16.dp)) {
                 Text(text = product.name)
                 Text(text = product.price.toBrazilianCurrency())
             }
             product.description?.let { Text(text = it, Modifier.padding(16.dp),
-                maxLines = 2, overflow = TextOverflow.Ellipsis) }
+                maxLines = maxLines, overflow = overFlow) }
         }
     }
+
+    if (expanded == false){
+        maxLines = 2
+        overFlow = TextOverflow.Visible
+    } else {
+        maxLines = Int.MAX_VALUE
+        overFlow = TextOverflow.Ellipsis
+    }
+
 }
 
 @Preview
@@ -63,7 +83,7 @@ private fun CardProductItemPreviewWithDescription() {
         Surface {
             CardProductItem(product = Product(name = "Teste de Produto",
                 price = BigDecimal(14.99),image = null,
-                description = LoremIpsum(50).values.first()
+                description = LoremIpsum(100).values.first()
             ))
         }
     }
