@@ -26,6 +26,7 @@ import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.components.ProductsSection
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.ui.components.CardProductItem
 
 @Composable
@@ -33,6 +34,10 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
 
     Column {
         var texto by remember { mutableStateOf("") }
+        val searchedProducts = sampleProducts.filter {product ->
+            product.name.contains(texto, ignoreCase = true) ||
+                    product.description?.contains(texto, ignoreCase = true) ?: false
+        }
 
         OutlinedTextField(value = texto,
             onValueChange = { newValue -> texto = newValue},
@@ -64,10 +69,8 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
                     }
                 }
             }else{
-                for (section in sections.values){
-                    for (product in section){
-                        item { CardProductItem(product = product) }
-                    }
+                for (product in searchedProducts){
+                    item { CardProductItem(product = product) }
                 }
             }
         }
