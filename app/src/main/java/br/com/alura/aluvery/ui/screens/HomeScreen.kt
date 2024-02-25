@@ -26,6 +26,7 @@ import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.components.ProductsSection
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.ui.components.CardProductItem
 
 @Composable
 fun HomeScreen(sections: Map<String, List<Product>>) {
@@ -56,9 +57,17 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
                 bottom = 90.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-            for (section in sections){
-                item {
-                    ProductsSection(title = section.key, products = section.value)
+            if (texto.isBlank()){
+                for (section in sections){
+                    item {
+                        ProductsSection(title = section.key, products = section.value)
+                    }
+                }
+            }else{
+                for (section in sections.values){
+                    for (product in section){
+                        item { CardProductItem(product = product) }
+                    }
                 }
             }
         }
