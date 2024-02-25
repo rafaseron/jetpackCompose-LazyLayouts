@@ -10,7 +10,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import br.com.alura.aluvery.R
@@ -38,7 +40,8 @@ fun CardProductItem(product: Product, elevation: Dp = 4.dp) {
                 Text(text = product.name)
                 Text(text = product.price.toBrazilianCurrency())
             }
-            product.description?.let { Text(text = it, Modifier.padding(16.dp)) }
+            product.description?.let { Text(text = it, Modifier.padding(16.dp),
+                maxLines = 2, overflow = TextOverflow.Ellipsis) }
         }
     }
 }
@@ -60,7 +63,7 @@ private fun CardProductItemPreviewWithDescription() {
         Surface {
             CardProductItem(product = Product(name = "Teste de Produto",
                 price = BigDecimal(14.99),image = null,
-                description = "Sou uma descricao"
+                description = LoremIpsum(50).values.first()
             ))
         }
     }
