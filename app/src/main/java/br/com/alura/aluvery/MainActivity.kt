@@ -23,8 +23,8 @@ class MainActivity : ComponentActivity() {
 fun App() {
     AluveryTheme {
         Surface {
-            //HomeScreen(sampleSections)
-            SearchScreen(selections = sampleSections)
+            HomeScreen(sections = sampleSections)
+            //SearchScreen(selections = sampleSections)
         }
     }
 }
