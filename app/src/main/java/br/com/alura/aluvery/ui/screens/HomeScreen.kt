@@ -34,9 +34,11 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
 
     Column {
         var texto by remember { mutableStateOf("") }
-        val searchedProducts = sampleProducts.filter {product ->
-            product.name.contains(texto, ignoreCase = true) ||
-                    product.description?.contains(texto, ignoreCase = true) ?: false
+        val searchedProducts = remember (texto) {
+            sampleProducts.filter {product ->
+                product.name.contains(texto, ignoreCase = true) ||
+                        product.description?.contains(texto, ignoreCase = true) ?: false
+            }
         }
 
         OutlinedTextField(value = texto,
