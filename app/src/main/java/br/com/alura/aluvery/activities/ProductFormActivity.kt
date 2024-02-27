@@ -52,7 +52,12 @@ fun ProductFormScreen() {
     var preco by remember { mutableStateOf("") }
     var descricao by remember { mutableStateOf("") }
 
+    //TESTES DE DADOS
+    /*
     urlImagem = "https://img.freepik.com/fotos-gratis/hamburguer-delicioso-isolado-no-fundo-branco_125540-3368.jpg"
+    nome = "João"
+    preco = "22,99"
+    descricao = LoremIpsum(300).values.first()*/
 
     Column(
         Modifier
@@ -65,7 +70,8 @@ fun ProductFormScreen() {
             modifier = Modifier.padding(start = 16.dp, top = 16.dp))
 
         if (urlImagem.isBlank()){} else{
-            AsyncImage(model = urlImagem, contentDescription = null, modifier = Modifier.fillMaxWidth()
+            AsyncImage(model = urlImagem, contentDescription = null, modifier = Modifier
+                .fillMaxWidth()
                 .height(200.dp))
         }
 
@@ -76,7 +82,7 @@ fun ProductFormScreen() {
                 .fillMaxWidth(1f)
                 .height(54.dp),
             placeholder = { Text(text = "Url da imagem")},
-            label = { Text(text = "Url da imagem")})
+            label = { Text(text = "Url da imagem") })
 
         OutlinedTextField(value = nome, onValueChange = {newValue ->
             nome = newValue },
@@ -84,7 +90,8 @@ fun ProductFormScreen() {
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
                 .height(54.dp),
-            placeholder = { Text(text = "Nome")})
+            placeholder = { Text(text = "Nome")},
+            label = { Text(text = "Nome") })
 
         OutlinedTextField(value = preco, onValueChange = {newValue ->
             preco = newValue },
@@ -92,7 +99,8 @@ fun ProductFormScreen() {
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
                 .height(54.dp),
-            placeholder = { Text(text = "Preço")})
+            placeholder = { Text(text = "Preço")},
+            label = { Text(text = "Preço") })
 
         OutlinedTextField(value = descricao, onValueChange = {newValue ->
             descricao = newValue },
@@ -101,7 +109,8 @@ fun ProductFormScreen() {
                 .fillMaxWidth(1f)
                 .height(100.dp),
             placeholder = { Text(text = "Descrição")},
-            maxLines = Int.MAX_VALUE)
+            maxLines = Int.MAX_VALUE,
+            label = { Text(text = "Descrição") })
 
         Button(onClick = { /*TODO*/ }, modifier = Modifier
             .padding(
