@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -107,7 +108,7 @@ fun ProductFormScreen() {
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
-                .height(100.dp),
+                .heightIn(min = 100.dp),
             placeholder = { Text(text = "Descrição")},
             maxLines = Int.MAX_VALUE,
             label = { Text(text = "Descrição") })
@@ -115,7 +116,8 @@ fun ProductFormScreen() {
         Button(onClick = { /*TODO*/ }, modifier = Modifier
             .padding(
                 start = 16.dp,
-                end = 16.dp
+                end = 16.dp,
+                bottom = 16.dp
             )
             .height(36.dp)
             .fillMaxWidth(1f)) {
