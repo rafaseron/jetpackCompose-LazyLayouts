@@ -1,4 +1,4 @@
-package br.com.alura.aluvery
+package br.com.alura.aluvery.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.screens.HomeScreen
-import br.com.alura.aluvery.ui.screens.SearchScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 
 class MainActivity : ComponentActivity() {
