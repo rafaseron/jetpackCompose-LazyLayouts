@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alura.aluvery.ui.theme.AluveryTheme
+import coil.compose.AsyncImage
 
 class ProductFormActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class ProductFormActivity: ComponentActivity() {
         setContent(){
             AluveryTheme {
                 Surface {
-                    Text(text = "Formulário de Produto")
+                    ProductFormScreen()
                 }
             }
         }
@@ -51,6 +52,8 @@ fun ProductFormScreen() {
     var preco by remember { mutableStateOf("") }
     var descricao by remember { mutableStateOf("") }
 
+    urlImagem = "https://img.freepik.com/fotos-gratis/hamburguer-delicioso-isolado-no-fundo-branco_125540-3368.jpg"
+
     Column(
         Modifier
             .fillMaxSize()
@@ -60,6 +63,11 @@ fun ProductFormScreen() {
         Text(text = "Criando o Produto", fontWeight = FontWeight(400),
             fontSize = 28.sp,
             modifier = Modifier.padding(start = 16.dp, top = 16.dp))
+
+        if (urlImagem.isBlank()){} else{
+            AsyncImage(model = urlImagem, contentDescription = null, modifier = Modifier.fillMaxWidth()
+                .height(200.dp))
+        }
 
         OutlinedTextField(value = urlImagem, onValueChange = {newValue ->
             urlImagem = newValue },
