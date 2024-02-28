@@ -133,7 +133,7 @@ fun ProductFormScreen() {
                              image = urlImagem,
                              description = descricao)
                          addedProducts.add(addProduct)
-                Log.e("", "Produto adicionado -> $addProduct") }
+                Log.e("ProductFormActivity", "Produto adicionado -> $addProduct") }
                          },
             modifier = Modifier.padding(
                 start = 16.dp,
