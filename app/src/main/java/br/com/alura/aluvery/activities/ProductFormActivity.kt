@@ -81,8 +81,10 @@ fun ProductFormScreen() {
         if (urlImagem.isBlank()){} else{
             AsyncImage(model = urlImagem, contentDescription = null, modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp), contentScale = ContentScale.Fit,
-                error = painterResource(id = R.drawable.placeholder))
+                .height(200.dp)
+                .padding(start = 16.dp, end = 16.dp), contentScale = ContentScale.Fit,
+                error = painterResource(id = R.drawable.baseline_image_search_24),
+                placeholder = painterResource(id = R.drawable.placeholder))
         }
 
         OutlinedTextField(value = urlImagem, onValueChange = {newValue ->
