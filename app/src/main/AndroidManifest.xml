@@ -32,7 +32,9 @@
         <activity android:name=".activities.ProductFormActivity"
             android:theme="@style/Theme.Aluvery"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            <!-- windowSoftInputMode para dar habilidade de scroll enquanto teclado virtual aberto -->
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
