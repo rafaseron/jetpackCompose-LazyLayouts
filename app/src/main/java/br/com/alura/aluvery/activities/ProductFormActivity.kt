@@ -30,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.alura.aluvery.model.Product
+import br.com.alura.aluvery.sampledata.addedProducts
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import coil.compose.AsyncImage
 
@@ -113,12 +115,18 @@ fun ProductFormScreen() {
             maxLines = Int.MAX_VALUE,
             label = { Text(text = "Descrição") })
 
-        Button(onClick = { /*TODO*/ }, modifier = Modifier
-            .padding(
+        Button(onClick = {
+            if (nome.isBlank() || preco.isBlank()){}
+            else{
+                         val addProduct = Product(name = nome,
+                             price = preco.toBigDecimal(),
+                             image = urlImagem,
+                             description = descricao)
+                         addedProducts.add(addProduct)}},
+            modifier = Modifier.padding(
                 start = 16.dp,
                 end = 16.dp,
-                bottom = 16.dp
-            )
+                bottom = 16.dp)
             .height(36.dp)
             .fillMaxWidth(1f)) {
             Text(text = "Salvar")

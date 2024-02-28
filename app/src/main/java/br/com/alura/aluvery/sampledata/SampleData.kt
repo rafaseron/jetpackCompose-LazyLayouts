@@ -72,7 +72,10 @@ val sampleProducts: List<Product> = listOf(
     ), *sampleDrinks.toTypedArray(), *sampleCandies.toTypedArray()
 )
 
+val addedProducts: MutableList<Product> = mutableListOf()
+
 val todosProdutos: List<Product> = listOf(*sampleProducts.toTypedArray())
 
 val sampleSections = mapOf("Promoções" to sampleProducts,
-    "Doces" to sampleCandies, "Bebidas" to sampleDrinks)
+    "Doces" to sampleCandies, "Bebidas" to sampleDrinks,
+    "Recentemente adicionados" to addedProducts)
