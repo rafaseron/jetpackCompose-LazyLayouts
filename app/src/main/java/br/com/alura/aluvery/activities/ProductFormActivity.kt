@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -38,6 +39,7 @@ import br.com.alura.aluvery.ui.theme.AluveryTheme
 import coil.compose.AsyncImage
 import java.lang.NumberFormatException
 import java.math.BigDecimal
+import br.com.alura.aluvery.R
 
 class ProductFormActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,7 +81,8 @@ fun ProductFormScreen() {
         if (urlImagem.isBlank()){} else{
             AsyncImage(model = urlImagem, contentDescription = null, modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp), contentScale = ContentScale.Fit)
+                .height(200.dp), contentScale = ContentScale.Fit,
+                error = painterResource(id = R.drawable.placeholder))
         }
 
         OutlinedTextField(value = urlImagem, onValueChange = {newValue ->
@@ -137,12 +140,14 @@ fun ProductFormScreen() {
                 Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
                 Log.e("ProductFormActivity", "Todos -> $addedProducts") }
                          },
-            modifier = Modifier.padding(
-                start = 16.dp,
-                end = 16.dp,
-                bottom = 16.dp)
-            .height(36.dp)
-            .fillMaxWidth(1f)) {
+            modifier = Modifier
+                .padding(
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = 16.dp
+                )
+                .height(36.dp)
+                .fillMaxWidth(1f)) {
             Text(text = "Salvar")
         }
     }
