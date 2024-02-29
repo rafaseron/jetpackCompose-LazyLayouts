@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -64,6 +65,7 @@ fun ProductFormScreen() {
     var nome by remember { mutableStateOf("") }
     var preco by remember { mutableStateOf("") }
     var descricao by remember { mutableStateOf("") }
+    var priceError by remember { mutableStateOf(false) }
 
     //TESTES DE DADOS
     /*
@@ -119,7 +121,8 @@ fun ProductFormScreen() {
         OutlinedTextField(value = preco, onValueChange = {newValue ->
             val convertedValue = try {
                 BigDecimal(newValue.replace(",", "."))
-            }catch (e: NumberFormatException){BigDecimal.ZERO}
+            }catch (e: NumberFormatException){BigDecimal.ZERO
+            priceError = true}
             preco = convertedValue.toString() },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
@@ -128,8 +131,12 @@ fun ProductFormScreen() {
             placeholder = { Text(text = "Preço")},
             label = { Text(text = "Preço") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal,
-                imeAction = ImeAction.Next)
-        )
+                imeAction = ImeAction.Next), isError = priceError )
+        if (priceError == true){
+            Text(text = "Preço deve ser em decimal", color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier.padding(start = 16.dp))
+        }
 
         OutlinedTextField(value = descricao, onValueChange = {newValue ->
             descricao = newValue },
