@@ -31,6 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -111,7 +112,8 @@ fun ProductFormScreen() {
             placeholder = { Text(text = "Nome")},
             label = { Text(text = "Nome") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next)
+                imeAction = ImeAction.Next,
+                capitalization = KeyboardCapitalization.Words)
         )
 
         OutlinedTextField(value = preco, onValueChange = {newValue ->
@@ -136,7 +138,8 @@ fun ProductFormScreen() {
             maxLines = Int.MAX_VALUE,
             label = { Text(text = "Descrição") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Default)
+                imeAction = ImeAction.Default,
+                capitalization = KeyboardCapitalization.Sentences)
         )
 
         Button(onClick = {
