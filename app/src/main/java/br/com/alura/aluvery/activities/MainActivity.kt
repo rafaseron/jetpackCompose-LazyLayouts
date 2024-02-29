@@ -1,5 +1,6 @@
 package br.com.alura.aluvery.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,16 +23,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            App()
+            App(onFABclick = {
+                startActivity(Intent(this, ProductFormActivity::class.java))
+            })
         }
     }
 }
 @Composable
-fun App() {
+fun App(onFABclick: () -> Unit = {}) {
     AluveryTheme {
         Surface {
             Scaffold(floatingActionButton = {
-                FloatingActionButton(onClick = {  }) {
+                FloatingActionButton(onClick = onFABclick ) {
                     Icon(painter = painterResource(id = R.drawable.baseline_add_24), contentDescription = "add")
                 }
             }) {paddingValues ->
