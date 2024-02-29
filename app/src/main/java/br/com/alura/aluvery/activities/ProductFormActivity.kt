@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
@@ -29,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -94,7 +96,9 @@ fun ProductFormScreen() {
                 .fillMaxWidth(1f)
                 .height(54.dp),
             placeholder = { Text(text = "Url da imagem")},
-            label = { Text(text = "Url da imagem") })
+            label = { Text(text = "Url da imagem") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri)
+        )
 
         OutlinedTextField(value = nome, onValueChange = {newValue ->
             nome = newValue },
@@ -103,7 +107,9 @@ fun ProductFormScreen() {
                 .fillMaxWidth(1f)
                 .height(54.dp),
             placeholder = { Text(text = "Nome")},
-            label = { Text(text = "Nome") })
+            label = { Text(text = "Nome") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
 
         OutlinedTextField(value = preco, onValueChange = {newValue ->
             preco = newValue },
@@ -112,7 +118,9 @@ fun ProductFormScreen() {
                 .fillMaxWidth(1f)
                 .height(54.dp),
             placeholder = { Text(text = "Preço")},
-            label = { Text(text = "Preço") })
+            label = { Text(text = "Preço") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+        )
 
         OutlinedTextField(value = descricao, onValueChange = {newValue ->
             descricao = newValue },
@@ -122,7 +130,9 @@ fun ProductFormScreen() {
                 .heightIn(min = 100.dp),
             placeholder = { Text(text = "Descrição")},
             maxLines = Int.MAX_VALUE,
-            label = { Text(text = "Descrição") })
+            label = { Text(text = "Descrição") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
 
         Button(onClick = {
             //garantir que o price fique em BigDecimal
