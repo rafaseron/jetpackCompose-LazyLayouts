@@ -20,12 +20,11 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Aluvery">
 
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>    -->
+            </intent-filter>
         </activity>
 
 
@@ -35,11 +34,6 @@
             android:exported="true"
             android:label="@string/app_name">
             <!-- windowSoftInputMode para dar habilidade de scroll enquanto teclado virtual aberto -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 
