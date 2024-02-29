@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -19,6 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alura.aluvery.model.Product
@@ -50,7 +53,10 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
             shape = RoundedCornerShape(percent = 100),
             leadingIcon = {Image(painter = painterResource(id = R.drawable.baseline_search_24), contentDescription = "Search")},
             placeholder = { Text(text = "O que você procura?")},
-            label = { Text(text = "Produto")})
+            label = { Text(text = "Produto")},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Search)
+        )
 
         /* Modo de cima é didatico para mostrar que o newValue armazena
          o novo valor serve para 'repassar' esse novo valor para o texto */

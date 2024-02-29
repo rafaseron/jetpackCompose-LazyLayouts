@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -97,7 +98,8 @@ fun ProductFormScreen() {
                 .height(54.dp),
             placeholder = { Text(text = "Url da imagem")},
             label = { Text(text = "Url da imagem") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri,
+                imeAction = ImeAction.Next)
         )
 
         OutlinedTextField(value = nome, onValueChange = {newValue ->
@@ -108,7 +110,8 @@ fun ProductFormScreen() {
                 .height(54.dp),
             placeholder = { Text(text = "Nome")},
             label = { Text(text = "Nome") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next)
         )
 
         OutlinedTextField(value = preco, onValueChange = {newValue ->
@@ -119,7 +122,8 @@ fun ProductFormScreen() {
                 .height(54.dp),
             placeholder = { Text(text = "Preço")},
             label = { Text(text = "Preço") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal,
+                imeAction = ImeAction.Next)
         )
 
         OutlinedTextField(value = descricao, onValueChange = {newValue ->
@@ -131,7 +135,8 @@ fun ProductFormScreen() {
             placeholder = { Text(text = "Descrição")},
             maxLines = Int.MAX_VALUE,
             label = { Text(text = "Descrição") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Default)
         )
 
         Button(onClick = {
