@@ -69,13 +69,14 @@ val sampleProducts: List<Product> = listOf(
         price = BigDecimal("7.99"),
         image = "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg",
         description = null
-    ), *sampleDrinks.toTypedArray(), *sampleCandies.toTypedArray()
+    )
 )
 
 val addedProducts: MutableList<Product> = mutableListOf()
 
-val todosProdutos: List<Product> = listOf(*sampleProducts.toTypedArray())
+val todosProdutos: MutableList<Product> = mutableListOf(*sampleProducts.toTypedArray(),*sampleDrinks.toTypedArray(),
+    *sampleCandies.toTypedArray(), *addedProducts.toTypedArray())
 
-val sampleSections = mapOf("Promoções" to sampleProducts,
-    "Doces" to sampleCandies, "Bebidas" to sampleDrinks,
-    "Recentemente adicionados" to addedProducts)
+val sampleSections = mapOf("Recentemente adicionados" to addedProducts,
+    "Salgados" to sampleProducts,
+    "Doces" to sampleCandies, "Bebidas" to sampleDrinks)

@@ -30,6 +30,7 @@ import br.com.alura.aluvery.ui.components.ProductsSection
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
 import br.com.alura.aluvery.sampledata.sampleProducts
+import br.com.alura.aluvery.sampledata.todosProdutos
 import br.com.alura.aluvery.ui.components.CardProductItem
 
 @Composable
@@ -38,7 +39,7 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
     Column {
         var texto by remember { mutableStateOf("") }
         val searchedProducts = remember (texto) {
-            sampleProducts.filter {product ->
+            todosProdutos.filter {product ->
                 product.name.contains(texto, ignoreCase = true) ||
                         product.description?.contains(texto, ignoreCase = true) ?: false
             }
