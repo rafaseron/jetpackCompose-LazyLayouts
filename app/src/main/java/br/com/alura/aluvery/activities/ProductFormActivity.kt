@@ -117,7 +117,10 @@ fun ProductFormScreen() {
         )
 
         OutlinedTextField(value = preco, onValueChange = {newValue ->
-            preco = newValue },
+            val convertedValue = try {
+                BigDecimal(newValue.replace(",", "."))
+            }catch (e: NumberFormatException){BigDecimal.ZERO}
+            preco = convertedValue.toString() },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
