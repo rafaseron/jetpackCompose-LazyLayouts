@@ -74,7 +74,11 @@ val sampleProducts: List<Product> = listOf(
 
 val addedProducts: MutableList<Product> = mutableListOf()
 
-val todosProdutos: MutableList<Product> = mutableListOf(*sampleProducts.toTypedArray(),*sampleDrinks.toTypedArray(),
+/*val todosProdutos: MutableList<Product> = mutableListOf(*sampleProducts.toTypedArray(),*sampleDrinks.toTypedArray(),
+    *sampleCandies.toTypedArray(), *addedProducts.toTypedArray()*/
+/*  para seguir o conteudo da Alura, vamos manter todosProdutos como List e alterar ele de List
+    para mutableList apenas no DAO  */
+val todosProdutos: List<Product> = listOf(*sampleProducts.toTypedArray(),*sampleDrinks.toTypedArray(),
     *sampleCandies.toTypedArray(), *addedProducts.toTypedArray())
 
 val sampleSections = mapOf("Recentemente adicionados" to addedProducts,

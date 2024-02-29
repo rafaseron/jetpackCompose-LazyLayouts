@@ -18,19 +18,35 @@ import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.dao.ProductDao
+import br.com.alura.aluvery.model.Product
+import br.com.alura.aluvery.sampledata.addedProducts
+import br.com.alura.aluvery.sampledata.sampleCandies
+import br.com.alura.aluvery.sampledata.sampleDrinks
+import br.com.alura.aluvery.sampledata.sampleProducts
+import br.com.alura.aluvery.sampledata.todosProdutos
 
 class MainActivity : ComponentActivity() {
+
+    private val dao = ProductDao()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             App(onFABclick = {
-                startActivity(Intent(this, ProductFormActivity::class.java))
-            })
+                startActivity(Intent(this, ProductFormActivity::class.java)) },
+                conteudo = {
+                    val mapSections:Map<String, List<Product>> = mapOf(
+                        "Todos produtos" to sampleProducts + sampleDrinks + sampleCandies,
+                        "Salgados" to sampleProducts,
+                        "Doces" to sampleCandies,
+                        "Bebidas" to sampleDrinks)
+
+                    HomeScreen(sections = mapSections)})
         }
     }
 }
 @Composable
-fun App(onFABclick: () -> Unit = {}) {
+fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}) {
     AluveryTheme {
         Surface {
             Scaffold(floatingActionButton = {
@@ -39,7 +55,7 @@ fun App(onFABclick: () -> Unit = {}) {
                 }
             }) {paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)){
-                    HomeScreen(sections = sampleSections)
+                    conteudo()
                 }
 
             }

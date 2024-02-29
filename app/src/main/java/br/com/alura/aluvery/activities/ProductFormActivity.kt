@@ -167,8 +167,9 @@ fun ProductFormScreen() {
                     price = convertedPrice,
                     image = urlImagem,
                     description = descricao)
-                addedProducts.add(addProduct)
-                todosProdutos.add(addProduct)
+                //de acordo com mudancas no codigo do app pela Alura -> fará por DAO
+                //addedProducts.add(addProduct)
+                //todosProdutos.add(addProduct)
                 Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
                 Log.e("ProductFormActivity", "addedProducts -> $addedProducts")
                 Log.e("ProductFormActivity", "todosProdutos -> $todosProdutos")}
