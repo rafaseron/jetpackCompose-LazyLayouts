@@ -45,6 +45,7 @@ import coil.compose.AsyncImage
 import java.lang.NumberFormatException
 import java.math.BigDecimal
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.sampledata.todosProdutos
 
 class ProductFormActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -162,13 +163,15 @@ fun ProductFormScreen() {
 
             if (nome.isBlank() || preco.isBlank()){}
             else{
-                         val addProduct = Product(name = nome,
-                             price = convertedPrice,
-                             image = urlImagem,
-                             description = descricao)
-                         addedProducts.add(addProduct)
+                val addProduct = Product(name = nome,
+                    price = convertedPrice,
+                    image = urlImagem,
+                    description = descricao)
+                addedProducts.add(addProduct)
+                todosProdutos.add(addProduct)
                 Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
-                Log.e("ProductFormActivity", "Todos -> $addedProducts") }
+                Log.e("ProductFormActivity", "addedProducts -> $addedProducts")
+                Log.e("ProductFormActivity", "todosProdutos -> $todosProdutos")}
                          },
             modifier = Modifier
                 .padding(
