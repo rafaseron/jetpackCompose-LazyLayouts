@@ -34,12 +34,12 @@ import br.com.alura.aluvery.sampledata.todosProdutos
 import br.com.alura.aluvery.ui.components.CardProductItem
 
 @Composable
-fun HomeScreen(sections: Map<String, List<Product>>) {
+fun HomeScreen(sections: Map<String, List<Product>>, daoList: List<Product>) {
 
     Column {
         var texto by remember { mutableStateOf("") }
         val searchedProducts = remember (texto) {
-            todosProdutos.filter {product ->
+            daoList.filter {product ->
                 product.name.contains(texto, ignoreCase = true) ||
                         product.description?.contains(texto, ignoreCase = true) ?: false
             }
@@ -110,7 +110,7 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
 private fun HomeScreenPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(sampleSections)
+            HomeScreen(sampleSections, todosProdutos)
         }
     }
 }

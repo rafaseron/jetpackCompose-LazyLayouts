@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         "Doces" to sampleCandies,
                         "Bebidas" to sampleDrinks)
 
-                    HomeScreen(sections = mapSections)})
+                    HomeScreen(sections = mapSections, listaProdutos)})
         }
     }
 }
