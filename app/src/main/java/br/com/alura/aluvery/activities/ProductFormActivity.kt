@@ -45,15 +45,21 @@ import coil.compose.AsyncImage
 import java.lang.NumberFormatException
 import java.math.BigDecimal
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.sampledata.todosProdutos
 
 class ProductFormActivity: ComponentActivity() {
+
+    private val dao = ProductDao()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent(){
             AluveryTheme {
                 Surface {
-                    ProductFormScreen()
+                    ProductFormScreen(onSaveClick = {p ->
+                        dao.save(p)
+                        finish()
+                    })
                 }
             }
         }
@@ -61,7 +67,7 @@ class ProductFormActivity: ComponentActivity() {
 }
 
 @Composable
-fun ProductFormScreen() {
+fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}) {
     var urlImagem by remember { mutableStateOf("") }
     var nome by remember { mutableStateOf("") }
     var preco by remember { mutableStateOf("") }
@@ -170,6 +176,7 @@ fun ProductFormScreen() {
                 //de acordo com mudancas no codigo do app pela Alura -> fará por DAO
                 //addedProducts.add(addProduct)
                 //todosProdutos.add(addProduct)
+                onSaveClick(addProduct)
                 Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
                 Log.e("ProductFormActivity", "addedProducts -> $addedProducts")
                 Log.e("ProductFormActivity", "todosProdutos -> $todosProdutos")}
