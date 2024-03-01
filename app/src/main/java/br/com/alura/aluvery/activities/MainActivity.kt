@@ -35,8 +35,10 @@ class MainActivity : ComponentActivity() {
             App(onFABclick = {
                 startActivity(Intent(this, ProductFormActivity::class.java)) },
                 conteudo = {
+                    val listaProdutos = ProductDao().listProducts()
+
                     val mapSections:Map<String, List<Product>> = mapOf(
-                        "Todos produtos" to sampleProducts + sampleDrinks + sampleCandies,
+                        "Todos produtos" to listaProdutos,
                         "Salgados" to sampleProducts,
                         "Doces" to sampleCandies,
                         "Bebidas" to sampleDrinks)
