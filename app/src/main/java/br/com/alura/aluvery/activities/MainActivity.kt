@@ -25,6 +25,7 @@ import br.com.alura.aluvery.sampledata.sampleCandies
 import br.com.alura.aluvery.sampledata.sampleDrinks
 import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.sampledata.todosProdutos
+import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 class MainActivity : ComponentActivity() {
 
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         "Doces" to sampleCandies,
                         "Bebidas" to sampleDrinks)
 
-                    HomeScreen(sections = mapSections, dao.listProducts())})
+                    HomeScreen(sections = mapSections, stateHolder = HomeScreenUiState())})
         }
     }
 }

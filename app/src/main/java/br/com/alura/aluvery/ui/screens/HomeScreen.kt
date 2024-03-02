@@ -32,11 +32,13 @@ import br.com.alura.aluvery.R
 import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.sampledata.todosProdutos
 import br.com.alura.aluvery.ui.components.CardProductItem
+import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 @Composable
-fun HomeScreen(sections: Map<String, List<Product>>, daoList: List<Product>) {
+fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiState) {
 
     Column {
+        /*
         var texto by remember { mutableStateOf("") }
         val searchedProducts = remember (texto) {
             daoList.filter {product ->
@@ -44,9 +46,10 @@ fun HomeScreen(sections: Map<String, List<Product>>, daoList: List<Product>) {
                         product.description?.contains(texto, ignoreCase = true) ?: false
             }
         }
+        */
 
-        OutlinedTextField(value = texto,
-            onValueChange = { newValue -> texto = newValue},
+        OutlinedTextField(value = stateHolder.texto,
+            onValueChange = { newValue -> stateHolder.texto = newValue},
 
             modifier = Modifier
                 .fillMaxWidth(1f)
@@ -71,14 +74,14 @@ fun HomeScreen(sections: Map<String, List<Product>>, daoList: List<Product>) {
                 bottom = 90.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-            if (texto.isBlank()){
+            if (stateHolder.texto.isBlank()){
                 for (section in sections){
                     item {
                         ProductsSection(title = section.key, products = section.value)
                     }
                 }
             }else{
-                for (product in searchedProducts){
+                for (product in stateHolder.getSearchedProducts()){
                     item { CardProductItem(product = product) }
                 }
             }
@@ -110,7 +113,7 @@ fun HomeScreen(sections: Map<String, List<Product>>, daoList: List<Product>) {
 private fun HomeScreenPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(sampleSections, todosProdutos)
+            HomeScreen(sampleSections, HomeScreenUiState())
         }
     }
 }
