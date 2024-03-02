@@ -74,7 +74,7 @@ fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiSt
                 bottom = 90.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-            if (stateHolder.texto.isBlank()){
+            if (stateHolder.textoIsBlank() == true){
                 for (section in sections){
                     item {
                         ProductsSection(title = section.key, products = section.value)

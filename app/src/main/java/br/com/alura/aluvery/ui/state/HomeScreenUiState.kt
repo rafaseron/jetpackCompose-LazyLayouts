@@ -22,6 +22,14 @@ class HomeScreenUiState() {
         }
     }
 
+    fun textoIsBlank(): Boolean{
+        if (texto.isBlank()){
+            return true
+        } else {
+            return false
+        }
+    }
+
     //VAMOS TER QUE PREPARAR FUNCOES PARA TRABALHAR COM A ESSA LOGICA:
     /*
     if (texto.isBlank()){
