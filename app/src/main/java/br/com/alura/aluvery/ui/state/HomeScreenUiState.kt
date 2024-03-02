@@ -14,6 +14,10 @@ class HomeScreenUiState() {
     private val dao = ProductDao()
 
     var texto by mutableStateOf("")
+    private set
+    fun alterarTexto(novoValor: String){
+        texto = novoValor
+    }
 
     fun getSearchedProducts(): List<Product>{
         return dao.listProducts().filter { p ->

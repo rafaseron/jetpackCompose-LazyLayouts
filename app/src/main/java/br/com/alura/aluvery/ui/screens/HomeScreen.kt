@@ -49,7 +49,7 @@ fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiSt
         */
 
         OutlinedTextField(value = stateHolder.texto,
-            onValueChange = { newValue -> stateHolder.texto = newValue},
+            onValueChange = { newValue -> stateHolder.alterarTexto(novoValor = newValue)},
 
             modifier = Modifier
                 .fillMaxWidth(1f)
