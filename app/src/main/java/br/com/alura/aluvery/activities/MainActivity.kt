@@ -18,11 +18,6 @@ import androidx.compose.ui.res.painterResource
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
-import br.com.alura.aluvery.dao.ProductDao
-import br.com.alura.aluvery.model.Product
-import br.com.alura.aluvery.sampledata.sampleCandies
-import br.com.alura.aluvery.sampledata.sampleDrinks
-import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 class MainActivity : ComponentActivity() {
