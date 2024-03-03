@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     /*
                     state = remember { HomeScreenUiState }
                      */
-                    HomeScreen(sections = mapSections, stateHolder = HomeScreenUiState())})
+                    HomeScreen(stateHolder = HomeScreenUiState())})
         }
     }
 }

@@ -5,10 +5,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.model.Product
+import br.com.alura.aluvery.sampledata.sampleCandies
+import br.com.alura.aluvery.sampledata.sampleDrinks
+import br.com.alura.aluvery.sampledata.sampleProducts
 
-class HomeScreenUiState() {
+class HomeScreenUiState {
 
     private val dao = ProductDao()
+
+    val mapSections:Map<String, List<Product>> = mapOf(
+        "Todos produtos" to dao.listProducts(),
+        "Salgados" to sampleProducts,
+        "Doces" to sampleCandies,
+        "Bebidas" to sampleDrinks
+    )
 
     var texto by mutableStateOf("")
     private set
@@ -29,11 +39,7 @@ class HomeScreenUiState() {
     }
 
     fun textoIsBlank(): Boolean{
-        if (texto.isBlank()){
-            return true
-        } else {
-            return false
-        }
+        return texto.isBlank()
     }
 
 }

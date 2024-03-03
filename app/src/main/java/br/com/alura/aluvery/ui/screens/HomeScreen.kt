@@ -29,11 +29,13 @@ import br.com.alura.aluvery.ui.components.CardProductItem
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 @Composable
-fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiState) {
+fun HomeScreen(stateHolder: HomeScreenUiState) {
     //COMO FAZER CASO VOCE QUEIRA PASSAR O STATE HOLDER CRIANDO UMA VARIAVEL COMO OBJETO:
       //val stateHolder = remember { HomeScreenUiState() }
         /* e ai pode tirar o stateHolder do parametro que funciona numa boa
          - so nao pode esquecer de ter o remember dentro da funcao Composable */
+
+    val sections = stateHolder.mapSections
 
     Column {
 
@@ -78,7 +80,7 @@ fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiSt
 private fun HomeScreenPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(sampleSections, stateHolder = HomeScreenUiState())
+            HomeScreen(stateHolder = HomeScreenUiState())
         }
     }
 }
