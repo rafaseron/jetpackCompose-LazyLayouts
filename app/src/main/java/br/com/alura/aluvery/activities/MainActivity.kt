@@ -35,7 +35,18 @@ class MainActivity : ComponentActivity() {
 
                     //CASO HAJA RECOMPOSICAO NESSA TELA, DEVE-SE MANDAR O STATE ASSIM:
                     /*
-                    state = remember { HomeScreenUiState }
+                    state = remember(//parametros a serem lembrados) { HomeScreenUiState() }
+                    Atencao -> se utilizar o remember dessa forma, tem que levar tudo de 'texto' para essa Activity
+                    e passar 'texto' para um dos parametros que serao levados em consideracao no remember
+
+                    Também, deverá ter o Map/Lista aqui dentro dessa Activity e passar para o parametro de remember
+                    (para computar tambem muddancas de lista -> acarretar em mudanca de UI)
+
+                    ai sim, seria só chamar a HomeScreen abaixo dessa forma:
+                    HomeScreen(stateHolder = state)
+
+                    Caso o HomeScreenUiState solicitar parametros, eles sao enviados no remember acima, nos
+                    parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
                     HomeScreen(stateHolder = HomeScreenUiState())})
         }
