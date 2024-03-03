@@ -23,6 +23,9 @@ class ProductFormUiState {
     fun newNameText(newValue: String){
         nome = newValue
     }
+    fun nameIsBlank(): Boolean{
+        return nome.isBlank()
+    }
     var preco by mutableStateOf("")
     var descricao by mutableStateOf("")
 
