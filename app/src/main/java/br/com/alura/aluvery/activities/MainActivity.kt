@@ -33,12 +33,6 @@ class MainActivity : ComponentActivity() {
                 startActivity(Intent(this, ProductFormActivity::class.java)) },
                 conteudo = {
 
-                    val mapSections:Map<String, List<Product>> = mapOf(
-                        "Todos produtos" to dao.listProducts(),
-                        "Salgados" to sampleProducts,
-                        "Doces" to sampleCandies,
-                        "Bebidas" to sampleDrinks)
-
                     //CASO HAJA RECOMPOSICAO NESSA TELA, DEVE-SE MANDAR O STATE ASSIM:
                     /*
                     state = remember { HomeScreenUiState }
