@@ -11,6 +11,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import br.com.alura.aluvery.ui.screens.HomeScreen
@@ -25,7 +27,15 @@ import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 class MainActivity : ComponentActivity() {
 
-    private val dao = ProductDao()
+    val state by mutableStateOf(HomeScreenUiState())
+    //MELHOR ESCOPO PARA COLOCAR O MUTABLESTATE DE UM STATEHOLDER !!!
+    /*
+    Colocando aqui em cima, ele consegue lembrar o Estado quando vai para outra tela
+    e retorna na mesma tela depois.
+    Além de tornar a implementacao 1000x mais facil, já que nao precisa trazer nada
+    de 'texto' e etc para dentro da MainActivity para passar para
+    um parametro de uma funcao remember
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -48,7 +58,7 @@ class MainActivity : ComponentActivity() {
                     Caso o HomeScreenUiState solicitar parametros, eles sao enviados no remember acima, nos
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
-                    HomeScreen(stateHolder = HomeScreenUiState())})
+                    HomeScreen(stateHolder = state)})
         }
     }
 }
