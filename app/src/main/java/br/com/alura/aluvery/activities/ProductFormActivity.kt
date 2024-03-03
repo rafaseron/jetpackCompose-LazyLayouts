@@ -1,11 +1,9 @@
 package br.com.alura.aluvery.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -23,10 +20,6 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -35,7 +28,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alura.aluvery.model.Product
@@ -70,10 +62,6 @@ class ProductFormActivity: ComponentActivity() {
 
 @Composable
 fun ProductFormScreen(stateHolder: ProductFormUiState, onSaveClick: (Product) -> Unit = {}) {
-
-    var preco by remember { mutableStateOf("") }
-    var descricao by remember { mutableStateOf("") }
-    var priceError by remember { mutableStateOf(false) }
 
     //TESTES DE DADOS
     /*
@@ -126,12 +114,14 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, onSaveClick: (Product) ->
                 capitalization = KeyboardCapitalization.Words)
         )
 
-        OutlinedTextField(value = preco, onValueChange = {newValue ->
+        OutlinedTextField(value = stateHolder.preco, onValueChange = {newValue ->
             val convertedValue = try {
                 BigDecimal(newValue.replace(",", "."))
-            }catch (e: NumberFormatException){BigDecimal.ZERO
-            priceError = true}
-            preco = convertedValue.toString() },
+            } catch (e: NumberFormatException){
+                BigDecimal.ZERO
+            stateHolder.isPriceError(true)
+            }
+            stateHolder.newPriceText(convertedValue.toString()) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
@@ -139,15 +129,15 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, onSaveClick: (Product) ->
             placeholder = { Text(text = "Preço")},
             label = { Text(text = "Preço") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal,
-                imeAction = ImeAction.Next), isError = priceError )
-        if (priceError == true){
+                imeAction = ImeAction.Next), isError = stateHolder.priceError )
+        if (stateHolder.priceError){
             Text(text = "Preço deve ser em decimal", color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp))
-        }
+        }else{}
 
-        OutlinedTextField(value = descricao, onValueChange = {newValue ->
-            descricao = newValue },
+        OutlinedTextField(value = stateHolder.descricao, onValueChange = {newValue ->
+            stateHolder.novaDescricao(newValue) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
@@ -163,17 +153,17 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, onSaveClick: (Product) ->
         Button(onClick = {
             //garantir que o price fique em BigDecimal
             val convertedPrice = try {
-                BigDecimal(preco)
+                BigDecimal(stateHolder.preco)
             }catch (e: NumberFormatException){
                 BigDecimal.ZERO
             }
 
-            if (stateHolder.nameIsBlank() || preco.isBlank()){}
+            if (stateHolder.nameIsBlank() || stateHolder.priceIsBlank()){}
             else{
                 val addProduct = Product(name = stateHolder.nome,
                     price = convertedPrice,
                     image = stateHolder.urlImagem,
-                    description = descricao)
+                    description = stateHolder.descricao)
                 //de acordo com mudancas no codigo do app pela Alura -> fará por DAO
                 //addedProducts.add(addProduct)
                 //todosProdutos.add(addProduct)

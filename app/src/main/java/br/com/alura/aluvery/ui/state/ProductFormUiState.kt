@@ -1,8 +1,10 @@
 package br.com.alura.aluvery.ui.state
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import java.math.BigDecimal
 
 class ProductFormUiState {
 
@@ -27,7 +29,25 @@ class ProductFormUiState {
         return nome.isBlank()
     }
     var preco by mutableStateOf("")
+        private set
+
+    fun newPriceText(newValue: String){
+        preco = newValue
+    }
+    fun priceIsBlank(): Boolean{
+        return preco.isBlank()
+    }
+    var priceError by mutableStateOf(false)
+    fun isPriceError(newValue: Boolean){
+        priceError = newValue
+    }
+
+
     var descricao by mutableStateOf("")
+        private set
+    fun novaDescricao(newValue: String){
+        descricao = newValue
+    }
 
 
 }
