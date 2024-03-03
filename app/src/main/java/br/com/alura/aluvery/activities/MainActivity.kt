@@ -39,6 +39,10 @@ class MainActivity : ComponentActivity() {
                         "Doces" to sampleCandies,
                         "Bebidas" to sampleDrinks)
 
+                    //CASO HAJA RECOMPOSICAO NESSA TELA, DEVE-SE MANDAR O STATE ASSIM:
+                    /*
+                    state = remember { HomeScreenUiState }
+                     */
                     HomeScreen(sections = mapSections, stateHolder = HomeScreenUiState())})
         }
     }
