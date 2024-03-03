@@ -47,13 +47,15 @@ import br.com.alura.aluvery.ui.state.ProductFormUiState
 class ProductFormActivity: ComponentActivity() {
 
     private val dao = ProductDao()
-    //private val stateHolder = ProductFormUiState()
+    val stateHolder by mutableStateOf(ProductFormUiState())
+    //DESSA FORMA ACIMA, MANTEMOS O ESTADO DO STATE HOLDER DENTRO DA ACTIVITY
+    //ISSO PROTEGE O ESTADO EM RECOMPOSICOES E RECRIACOES DE TELA
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent(){
             AluveryTheme {
                 Surface {
-                    ProductFormScreen(/*stateHolder = stateHolder,*/ onSaveClick = {p ->
+                    ProductFormScreen(stateHolder = stateHolder, onSaveClick = {p ->
                         dao.save(p)
                         finish()
                     })
@@ -64,9 +66,7 @@ class ProductFormActivity: ComponentActivity() {
 }
 
 @Composable
-fun ProductFormScreen(/*stateHolder: ProductFormUiState,*/ onSaveClick: (Product) -> Unit = {}) {
-
-    val stateHolder by remember { mutableStateOf(ProductFormUiState()) }
+fun ProductFormScreen(stateHolder: ProductFormUiState, onSaveClick: (Product) -> Unit = {}) {
 
     //TESTES DE DADOS
     /*
@@ -195,7 +195,7 @@ fun ProductFormScreen(/*stateHolder: ProductFormUiState,*/ onSaveClick: (Product
 fun ProductFormScreenPreview() {
     AluveryTheme {
         Surface {
-            ProductFormScreen(/*ProductFormUiState()*/)
+            ProductFormScreen(ProductFormUiState())
         }
     }
 }
