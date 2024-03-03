@@ -13,18 +13,14 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
 import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.model.Product
-import br.com.alura.aluvery.sampledata.addedProducts
 import br.com.alura.aluvery.sampledata.sampleCandies
 import br.com.alura.aluvery.sampledata.sampleDrinks
 import br.com.alura.aluvery.sampledata.sampleProducts
-import br.com.alura.aluvery.sampledata.todosProdutos
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 class MainActivity : ComponentActivity() {
@@ -61,7 +57,6 @@ fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}) {
                 }
 
             }
-            //SearchScreen(selections = sampleSections)
         }
     }
 }

@@ -14,10 +14,6 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -29,8 +25,6 @@ import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.components.ProductsSection
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
-import br.com.alura.aluvery.sampledata.sampleProducts
-import br.com.alura.aluvery.sampledata.todosProdutos
 import br.com.alura.aluvery.ui.components.CardProductItem
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
@@ -42,15 +36,6 @@ fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiSt
          - so nao pode esquecer de ter o remember dentro da funcao Composable */
 
     Column {
-        /*
-        var texto by remember { mutableStateOf("") }
-        val searchedProducts = remember (texto) {
-            daoList.filter {product ->
-                product.name.contains(texto, ignoreCase = true) ||
-                        product.description?.contains(texto, ignoreCase = true) ?: false
-            }
-        }
-        */
 
         OutlinedTextField(value = stateHolder.texto,
             onValueChange = stateHolder.alterarTexto /*
@@ -65,15 +50,7 @@ fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiSt
             placeholder = { Text(text = "O que você procura?")},
             label = { Text(text = "Produto")},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Search)
-        )
-
-        /* Modo de cima é didatico para mostrar que o newValue armazena
-         o novo valor serve para 'repassar' esse novo valor para o texto */
-        //FAZENDO DIRETO FICARIA:
-        //var newValue by remember { mutableStateOf("") }
-        //value = newValue
-        //onValueChange = { newValue = it}
+                imeAction = ImeAction.Search))
 
         LazyColumn(Modifier.fillMaxSize(),
             contentPadding = PaddingValues(top = 16.dp,
@@ -94,24 +71,6 @@ fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiSt
         }
 
     }
-
-    /*Column(
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        Spacer(Modifier)
-        for (section in sections) {
-            val title = section.key
-            val products = section.value
-            ProductsSection(
-                title = title,
-                products = products
-            )
-        }
-        Spacer(Modifier)
-    }*/
 }
 
 @Preview(showSystemUi = true)
