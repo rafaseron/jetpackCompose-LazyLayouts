@@ -53,7 +53,9 @@ fun HomeScreen(sections: Map<String, List<Product>>, stateHolder: HomeScreenUiSt
         */
 
         OutlinedTextField(value = stateHolder.texto,
-            onValueChange = { newValue -> stateHolder.alterarTexto(novoValor = newValue)},
+            onValueChange = stateHolder.alterarTexto /*
+            USANDO A FUNCAO FICARIA ASSIM:
+            {newValue -> stateHolder.alterarTexto(newValue)}*/,
 
             modifier = Modifier
                 .fillMaxWidth(1f)

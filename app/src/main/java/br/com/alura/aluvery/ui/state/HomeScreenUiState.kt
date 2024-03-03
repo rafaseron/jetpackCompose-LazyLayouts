@@ -15,9 +15,14 @@ class HomeScreenUiState() {
 
     var texto by mutableStateOf("")
     private set
+
+    //ESSA FUNCAO FAZ A MESMA COISA QUE A PROPERTY ABAIXO DELA:
+    /*
     fun alterarTexto(novoValor: String){
         texto = novoValor
-    }
+    }   */
+    //ESSA PROPERTY FAZ A MESMA COISA QUE A FUNCAO ACIMA
+     val alterarTexto: (String) -> Unit = {novoValor -> texto = novoValor}
 
     fun getSearchedProducts(): List<Product>{
         return dao.listProducts().filter { p ->
