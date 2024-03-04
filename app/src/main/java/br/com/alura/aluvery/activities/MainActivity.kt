@@ -11,15 +11,11 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
-import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 class MainActivity : ComponentActivity() {
@@ -45,8 +41,7 @@ class MainActivity : ComponentActivity() {
                     Caso o HomeScreenUiState solicitar parametros, eles sao enviados no remember acima, nos
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
-                    val state = remember(HomeScreenUiState().texto, ProductDao().listProducts()) {HomeScreenUiState()}
-                    HomeScreen(stateHolder = state)})
+                    HomeScreen(stateHolder = HomeScreenUiState())})
         }
     }
 }
