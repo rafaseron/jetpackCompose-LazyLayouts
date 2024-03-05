@@ -14,6 +14,10 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -25,22 +29,65 @@ import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.components.ProductsSection
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.dao.ProductDao
+import br.com.alura.aluvery.sampledata.sampleCandies
+import br.com.alura.aluvery.sampledata.sampleDrinks
+import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.ui.components.CardProductItem
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 @Composable
-fun HomeScreen(stateHolder: HomeScreenUiState) {
-    //COMO FAZER CASO VOCE QUEIRA PASSAR O STATE HOLDER CRIANDO UMA VARIAVEL COMO OBJETO:
-      //val stateHolder = remember { HomeScreenUiState() }
-        /* e ai pode tirar o stateHolder do parametro que funciona numa boa
-         - so nao pode esquecer de ter o remember dentro da funcao Composable */
+fun HomeScreen(stateHolder: HomeScreenUiState, daoList:List<Product>) {
 
-    val sections = stateHolder.mapSections
+    val mapSections:Map<String, List<Product>> = mapOf(
+        "Todos produtos" to daoList,
+        "Salgados" to sampleProducts,
+        "Doces" to sampleCandies,
+        "Bebidas" to sampleDrinks
+    )
+
+    var texto by remember { mutableStateOf("") }
+
+    fun alterarTexto(novoValor: String){
+        texto = novoValor
+    }
+
+    fun getSearchedProducts(): List<Product>{
+        return daoList.filter { p ->
+            p.name.contains(texto, ignoreCase = true) ||
+                    p.description?.contains(texto, ignoreCase = true) ?: false
+        }
+    }
+
+    val searchedProducts = remember(texto, daoList) {
+        if (texto.isNotBlank()){
+            getSearchedProducts()
+        }else{
+            emptyList()
+        }
+    }
+
+    val state = remember (daoList, texto) {
+        HomeScreenUiState(
+            sections = mapSections,
+            produtosPesquisados = searchedProducts,
+            texto = texto,
+            onSearchChange = {texto = it}
+        )
+    }
+
+    HomeScreen(stateHolder = state)
+}
+@Composable
+fun HomeScreen(stateHolder: HomeScreenUiState){
 
     Column {
+        val sections = stateHolder.sections
+        val text = stateHolder.texto
+        val searchedProducts = stateHolder.produtosPesquisados
 
         OutlinedTextField(value = stateHolder.texto,
-            onValueChange = stateHolder.alterarTexto /*
+            onValueChange = stateHolder.onSearchChange /*
             USANDO A FUNCAO FICARIA ASSIM:
             {newValue -> stateHolder.alterarTexto(newValue)}*/,
 
@@ -66,13 +113,14 @@ fun HomeScreen(stateHolder: HomeScreenUiState) {
                     }
                 }
             }else{
-                for (product in stateHolder.getSearchedProducts()){
+                for (product in stateHolder.produtosPesquisados){
                     item { CardProductItem(product = product) }
                 }
             }
         }
 
     }
+
 }
 
 @Preview(showSystemUi = true)
@@ -80,7 +128,7 @@ fun HomeScreen(stateHolder: HomeScreenUiState) {
 private fun HomeScreenPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(stateHolder = HomeScreenUiState())
+            HomeScreen(stateHolder = HomeScreenUiState(), ProductDao().listProducts())
         }
     }
 }

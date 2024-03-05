@@ -9,9 +9,12 @@ import br.com.alura.aluvery.sampledata.sampleCandies
 import br.com.alura.aluvery.sampledata.sampleDrinks
 import br.com.alura.aluvery.sampledata.sampleProducts
 
-class HomeScreenUiState {
+class HomeScreenUiState(val sections: Map<String, List<Product>> = emptyMap(),
+                        val produtosPesquisados: List<Product> = emptyList(),
+                        val texto: String = "",
+                        val onSearchChange: (String) -> Unit = {}) {
 
-    private val dao = ProductDao()
+    /*private val dao = ProductDao()
 
     val mapSections:Map<String, List<Product>> = mapOf(
         "Todos produtos" to dao.listProducts(),
@@ -37,6 +40,8 @@ class HomeScreenUiState {
                     p.description?.contains(texto, ignoreCase = true) ?: false
         }
     }
+
+     */
 
     fun textoIsBlank(): Boolean{
         return texto.isBlank()

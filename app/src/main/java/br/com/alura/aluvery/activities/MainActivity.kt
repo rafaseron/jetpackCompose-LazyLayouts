@@ -16,9 +16,11 @@ import androidx.compose.ui.res.painterResource
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 class MainActivity : ComponentActivity() {
+    private val dao = ProductDao()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -41,7 +43,8 @@ class MainActivity : ComponentActivity() {
                     Caso o HomeScreenUiState solicitar parametros, eles sao enviados no remember acima, nos
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
-                    HomeScreen(stateHolder = HomeScreenUiState())})
+                    val daoList = dao.listProducts()
+                    HomeScreen(stateHolder = HomeScreenUiState(), daoList)})
         }
     }
 }
