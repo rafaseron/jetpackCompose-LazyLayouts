@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
                     val daoList = dao.listProducts()
-                    HomeScreen(stateHolder = HomeScreenUiState(), daoList)})
+                    HomeScreen(daoList)})
         }
     }
 }

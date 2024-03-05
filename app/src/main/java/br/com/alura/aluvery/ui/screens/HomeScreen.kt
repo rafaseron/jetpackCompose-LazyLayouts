@@ -37,7 +37,7 @@ import br.com.alura.aluvery.ui.components.CardProductItem
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
 
 @Composable
-fun HomeScreen(stateHolder: HomeScreenUiState, daoList:List<Product>) {
+fun HomeScreen(daoList:List<Product>) {
 
     val mapSections:Map<String, List<Product>> = mapOf(
         "Todos produtos" to daoList,
@@ -128,7 +128,7 @@ fun HomeScreen(stateHolder: HomeScreenUiState){
 private fun HomeScreenPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(stateHolder = HomeScreenUiState(), ProductDao().listProducts())
+            HomeScreen(ProductDao().listProducts())
         }
     }
 }
