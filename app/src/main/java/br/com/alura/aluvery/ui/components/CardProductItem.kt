@@ -27,8 +27,6 @@ import java.math.BigDecimal
 @Composable
 fun CardProductItem(product: Product, elevation: Dp = 4.dp) {
 
-    var maxLines by remember { mutableStateOf(2) }
-    var overFlow by remember { mutableStateOf(TextOverflow.Ellipsis) }
     var expanded by remember { mutableStateOf(false) }
 
     Card(Modifier.fillMaxWidth().heightIn(150.dp)
@@ -51,17 +49,12 @@ fun CardProductItem(product: Product, elevation: Dp = 4.dp) {
                 Text(text = product.name)
                 Text(text = product.price.toBrazilianCurrency())
             }
-            product.description?.let { Text(text = it, Modifier.padding(16.dp),
-                maxLines = maxLines, overflow = overFlow) }
-        }
-    }
 
-    if (expanded == false){
-        maxLines = 2
-        overFlow = TextOverflow.Visible
-    } else {
-        maxLines = Int.MAX_VALUE
-        overFlow = TextOverflow.Ellipsis
+            if (expanded){
+                product.description?.let { Text(text = it, Modifier.padding(16.dp),
+                    maxLines = Int.MAX_VALUE, overflow = TextOverflow.Ellipsis) }
+            }
+        }
     }
 
 }
