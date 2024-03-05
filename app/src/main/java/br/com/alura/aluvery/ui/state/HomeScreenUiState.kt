@@ -14,6 +14,29 @@ class HomeScreenUiState(val sections: Map<String, List<Product>> = emptyMap(),
                         val texto: String = "",
                         val onSearchChange: (String) -> Unit = {}) {
 
+    fun textoIsBlank(): Boolean{
+        return texto.isBlank()
+    }
+
+    /* ESSA CLASSE FUNCIONA COMO UMA CLASSE 'COBAIA', ONDE OS DADOS
+        SAO PASSADOS VIA PARAMETRO PARA SEREM PUXADOS DEPOIS
+        NA FUNCAO COMPOSABLE QUE EXIGIR UM OBJETO DESSA CLASSE 'HOMESCREENUISTATE'
+        COMO UM PARAMETRO PARA CHAMA-LO
+
+     ESSE É O CASO DA SEGUNDA FUNCAO @COMOSABLE HomeScreen
+
+     A Arquitetura é essa:
+     HomeScreen(List<Product) -> passa os dados para HomeScreenUiState, sua classe Cobaia
+        -> São recebidos em HomeScreen(objeto: HomeScreenUiState)
+     */
+
+
+
+
+
+
+
+    //CODIGOS ANTIGOS PARA REVISAR SE PRECISO:
     /*private val dao = ProductDao()
 
     val mapSections:Map<String, List<Product>> = mapOf(
@@ -42,9 +65,5 @@ class HomeScreenUiState(val sections: Map<String, List<Product>> = emptyMap(),
     }
 
      */
-
-    fun textoIsBlank(): Boolean{
-        return texto.isBlank()
-    }
 
 }
