@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -27,10 +28,13 @@ import java.math.BigDecimal
 @Composable
 fun CardProductItem(product: Product, elevation: Dp = 4.dp) {
 
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
 
-    Card(Modifier.fillMaxWidth().heightIn(150.dp)
-        .clickable { expanded =! expanded },
+    Card(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(150.dp)
+            .clickable { expanded = !expanded },
         elevation = elevation) {
 
         Column {
