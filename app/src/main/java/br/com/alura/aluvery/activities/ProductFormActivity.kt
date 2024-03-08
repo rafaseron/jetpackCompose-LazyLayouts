@@ -23,6 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -47,7 +49,7 @@ import br.com.alura.aluvery.ui.state.ProductFormUiState
 class ProductFormActivity: ComponentActivity() {
 
     private val dao = ProductDao()
-    val stateHolder by mutableStateOf(ProductFormUiState())
+    //val stateHolder by mutableStateOf(ProductFormUiState())
     //DESSA FORMA ACIMA, MANTEMOS O ESTADO DO STATE HOLDER DENTRO DA ACTIVITY
     //ISSO PROTEGE O ESTADO EM RECOMPOSICOES E RECRIACOES DE TELA
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +57,7 @@ class ProductFormActivity: ComponentActivity() {
         setContent(){
             AluveryTheme {
                 Surface {
-                    ProductFormScreen(stateHolder = stateHolder, onSaveClick = {p ->
+                    ProductFormScreen(onClick = {p ->
                         dao.save(p)
                         finish()
                     })
@@ -65,15 +67,33 @@ class ProductFormActivity: ComponentActivity() {
     }
 }
 
+//STATEFUL COMPOSABLE
 @Composable
-fun ProductFormScreen(stateHolder: ProductFormUiState, onSaveClick: (Product) -> Unit = {}) {
+fun ProductFormScreen(onClick: (Product) -> Unit = {}) {
+    val onSaveClick = onClick
 
-    //TESTES DE DADOS
-    /*
-    urlImagem = "https://img.freepik.com/fotos-gratis/hamburguer-delicioso-isolado-no-fundo-branco_125540-3368.jpg"
-    nome = "João"
-    preco = "22,99"
-    descricao = LoremIpsum(300).values.first()*/
+    val urlImagem by rememberSaveable { mutableStateOf("") }
+    val nome by rememberSaveable { mutableStateOf("") }
+    val preco by rememberSaveable { mutableStateOf("") }
+    val descricao by rememberSaveable { mutableStateOf("") }
+    val priceError by rememberSaveable { mutableStateOf(false) }
+
+    val state = remember (urlImagem, nome, preco, descricao, priceError){
+        ProductFormUiState(
+            onSaveClick = onSaveClick,
+            url = urlImagem,
+            name = nome,
+            price = preco,
+            discription = descricao,
+            erroNoPreco = priceError)
+    }
+
+    ProductFormScreen(stateHolder = state)
+}
+
+//STATELESS COMPOSABLE
+@Composable
+fun ProductFormScreen(stateHolder: ProductFormUiState) {
 
     Column(
         Modifier
@@ -172,7 +192,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, onSaveClick: (Product) ->
                 //de acordo com mudancas no codigo do app pela Alura -> fará por DAO
                 //addedProducts.add(addProduct)
                 //todosProdutos.add(addProduct)
-                onSaveClick(addProduct)
+                stateHolder.onSaveClick(addProduct)
                 Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
                 Log.e("ProductFormActivity", "addedProducts -> $addedProducts")
                 Log.e("ProductFormActivity", "todosProdutos -> $todosProdutos")}
@@ -195,7 +215,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, onSaveClick: (Product) ->
 fun ProductFormScreenPreview() {
     AluveryTheme {
         Surface {
-            ProductFormScreen(ProductFormUiState())
+            ProductFormScreen(onClick = {})
         }
     }
 }
