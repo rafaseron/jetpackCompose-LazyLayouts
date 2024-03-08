@@ -17,6 +17,10 @@ class ProductFormUiState(var onSaveClick: (Product) -> Unit = {},
     // atualizados pro Stateless - Estados modificados aqui no StateHolder - , precisamos armazenar
     // essas variaveis em uma Variavel com acesso ao método by mutableStateOf(variavelAntiga)
 
+    //ou seja, se fossemos apenas propagar os Estados (sem fazer Alteracoes aqui dentro do StateHolder), pode
+    //ser que apenas declarar as Variaveis no parametro da classe StateHolder já fosse o suficiente
+    // (igual acontece com a 'var onSaveClick'
+
     var urlImagem by mutableStateOf(url)
     var nome by mutableStateOf(name)
     var preco by mutableStateOf(price)
