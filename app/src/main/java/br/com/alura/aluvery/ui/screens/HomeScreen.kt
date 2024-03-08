@@ -34,43 +34,24 @@ import br.com.alura.aluvery.sampledata.sampleCandies
 import br.com.alura.aluvery.sampledata.sampleDrinks
 import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.ui.components.CardProductItem
-import br.com.alura.aluvery.ui.state.HomeScreenUiState
+import br.com.alura.aluvery.ui.viewmodels.HomeScreenUiState
+import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
 
 @Composable
-fun HomeScreen(daoList:List<Product>) {
-
-    val mapSections:Map<String, List<Product>> = mapOf(
-        "Todos produtos" to daoList,
-        "Salgados" to sampleProducts,
-        "Doces" to sampleCandies,
-        "Bebidas" to sampleDrinks
-    )
+fun HomeScreen(viewModel: HomeScreenViewModel) {
 
     var texto by rememberSaveable { mutableStateOf("") }
 
-    fun getSearchedProducts(): List<Product>{
-        return daoList.filter { p ->
-            p.name.contains(texto, ignoreCase = true) ||
-                    p.description?.contains(texto, ignoreCase = true) ?: false
-        }
-    }
+    val state = viewModel.uiState
 
-    val searchedProducts = remember(texto, daoList) {
-        if (texto.isNotBlank()){
-            getSearchedProducts()
-        }else{
-            emptyList()
-        }
-    }
-
-    val state = remember (daoList, texto) {
+    /*val state = remember (daoList, texto) {
         HomeScreenUiState(
             sections = mapSections,
             produtosPesquisados = searchedProducts,
             texto = texto,
             onSearchChange = {texto = it}
         )
-    }
+    } */
 
     HomeScreen(stateHolder = state)
 }
@@ -122,7 +103,7 @@ fun HomeScreen(stateHolder: HomeScreenUiState){
 private fun HomeScreenPreview() {
     AluveryTheme {
         Surface {
-            HomeScreen(ProductDao().listProducts())
+            HomeScreen(HomeScreenViewModel())
         }
     }
 }

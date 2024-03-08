@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FloatingActionButton
@@ -18,6 +19,7 @@ import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
 import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.ui.state.HomeScreenUiState
+import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
     private val dao = ProductDao()
@@ -43,8 +45,8 @@ class MainActivity : ComponentActivity() {
                     Caso o HomeScreenUiState solicitar parametros, eles sao enviados no remember acima, nos
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
-                    val daoList = dao.listProducts()
-                    HomeScreen(daoList)})
+                    val viewModel by viewModels<HomeScreenViewModel>()
+                    HomeScreen(viewModel)})
         }
     }
 }
