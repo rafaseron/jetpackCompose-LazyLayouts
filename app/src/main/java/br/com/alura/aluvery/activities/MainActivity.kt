@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                     Caso o HomeScreenUiState solicitar parametros, eles sao enviados no remember acima, nos
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
-                    val viewModel by viewModels<HomeScreenViewModel>()
+                    val viewModel: HomeScreenViewModel by viewModels()
                     HomeScreen(viewModel)})
         }
     }
