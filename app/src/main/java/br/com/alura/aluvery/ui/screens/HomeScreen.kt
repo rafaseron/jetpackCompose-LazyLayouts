@@ -26,7 +26,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.alura.aluvery.model.Product
-import br.com.alura.aluvery.sampledata.sampleSections
 import br.com.alura.aluvery.ui.components.ProductsSection
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
@@ -48,10 +47,6 @@ fun HomeScreen(daoList:List<Product>) {
     )
 
     var texto by rememberSaveable { mutableStateOf("") }
-
-    fun alterarTexto(novoValor: String){
-        texto = novoValor
-    }
 
     fun getSearchedProducts(): List<Product>{
         return daoList.filter { p ->
