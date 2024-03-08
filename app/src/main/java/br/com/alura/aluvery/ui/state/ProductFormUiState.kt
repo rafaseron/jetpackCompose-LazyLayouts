@@ -15,7 +15,7 @@ class ProductFormUiState(var onSaveClick: (Product) -> Unit = {},
 
     //Para Armazenar os Estados do Composable Stateful e conseguir mandar esses Estados
     // atualizados pro Stateless - Estados modificados aqui no StateHolder - , precisamos armazenar
-    // essas variaveis em uma Variavel com acesso ao método by mutableStateOf(variavelAntiga)
+    // essas variaveis em uma Variavel com acesso ao método by mutableStateOf(variavelAntiga)//
 
     var urlImagem by mutableStateOf(url)
     var nome by mutableStateOf(name)
