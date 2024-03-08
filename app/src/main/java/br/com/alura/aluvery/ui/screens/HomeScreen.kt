@@ -84,8 +84,6 @@ fun HomeScreen(stateHolder: HomeScreenUiState){
 
     Column {
         val sections = stateHolder.sections
-        val text = stateHolder.texto
-        val searchedProducts = stateHolder.produtosPesquisados
 
         OutlinedTextField(value = stateHolder.texto,
             onValueChange = stateHolder.onSearchChange /*
