@@ -51,7 +51,7 @@ class HomeScreenViewModel: ViewModel(){
     }
 
     private fun getSearchedProducts(texto: String): List<Product>{
-        return daoList.filter { p ->
+        return daoList.value.filter { p ->
             p.name.contains(texto, ignoreCase = true) ||
                     p.description?.contains(texto, ignoreCase = true) ?: false
         }
