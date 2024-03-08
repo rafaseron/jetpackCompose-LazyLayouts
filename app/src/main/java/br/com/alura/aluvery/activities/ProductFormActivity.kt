@@ -91,7 +91,7 @@ fun ProductFormScreen(onClick: (Product) -> Unit = {}) {
     ProductFormScreen(stateHolder = state)
 }
 
-//STATELESS COMPOSABLE//
+//STATELESS COMPOSABLE
 @Composable
 fun ProductFormScreen(stateHolder: ProductFormUiState) {
 
