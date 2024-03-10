@@ -43,7 +43,9 @@ class HomeScreenViewModel: ViewModel(){
                         "Todos produtos" to listaColetada,
                         "Salgados" to sampleProducts,
                         "Doces" to sampleCandies,
-                        "Bebidas" to sampleDrinks)
+                        "Bebidas" to sampleDrinks),
+                    //forcando uma nova busca do filtro após adicionar novos elementos a Lista
+                    produtosPesquisados = searchedProducts(uiState.texto)
                 )
             }
 
@@ -57,6 +59,8 @@ class HomeScreenViewModel: ViewModel(){
         }
     }
 
+    //funcao que utiliza a getSearchedProduts
+    //funcao dela é fazer o filtro apenas quando o texto não está em branco
     private fun searchedProducts(texto: String): List<Product> {
         return if (uiState.texto.isNotBlank()){
             getSearchedProducts(texto)
