@@ -14,9 +14,9 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -25,14 +25,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.alura.aluvery.model.Product
 import br.com.alura.aluvery.ui.components.ProductsSection
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
-import br.com.alura.aluvery.dao.ProductDao
-import br.com.alura.aluvery.sampledata.sampleCandies
-import br.com.alura.aluvery.sampledata.sampleDrinks
-import br.com.alura.aluvery.sampledata.sampleProducts
 import br.com.alura.aluvery.ui.components.CardProductItem
 import br.com.alura.aluvery.ui.viewmodels.HomeScreenUiState
 import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
@@ -42,16 +37,10 @@ fun HomeScreen(viewModel: HomeScreenViewModel) {
 
     var texto by rememberSaveable { mutableStateOf("") }
 
-    val state = viewModel.uiState
+    val state by viewModel.uiState.collectAsState()
+    //collectAsState converte a uiState de StateFlow para State
+    //a delegate 'by' converte de State<HomeScreenUistate> para um objeto de HomeScreenUiState
 
-    /*val state = remember (daoList, texto) {
-        HomeScreenUiState(
-            sections = mapSections,
-            produtosPesquisados = searchedProducts,
-            texto = texto,
-            onSearchChange = {texto = it}
-        )
-    } */
 
     HomeScreen(stateHolder = state)
 }
