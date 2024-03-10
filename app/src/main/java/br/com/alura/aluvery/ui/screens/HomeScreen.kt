@@ -81,7 +81,7 @@ fun HomeScreen(stateHolder: HomeScreenUiState){
                 bottom = 90.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-            if (stateHolder.textoIsBlank() == true){
+            if (stateHolder.textoIsBlank()){
                 for (section in sections){
                     item {
                         ProductsSection(title = section.key, products = section.value)
