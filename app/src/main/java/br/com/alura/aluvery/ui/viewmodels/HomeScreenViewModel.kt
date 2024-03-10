@@ -25,8 +25,10 @@ class HomeScreenViewModel: ViewModel(){
     private val dao = ProductDao()
     val daoList = dao.listProducts()
 
-    private var _uiState: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(value = HomeScreenUiState())
-    var uiState = _uiState.asStateFlow()
+    private val _uiState: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(value = HomeScreenUiState())
+    //o _uiState é 'val' pois alteramos aqui somente seu .value, nunca sua instancia de fato
+    //caso alterarmos a instancia, perderiamos qualquer Estado ali contido
+    val uiState = _uiState.asStateFlow()
 
     init {
         _uiState.update {
