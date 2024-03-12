@@ -100,6 +100,18 @@ fun ProductFormScreen(onClick: (Product) -> Unit = {}, viewModel: ProductFormVie
 fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.alura.aluvery.ui.viewmodels.ProductFormUiState,
                       viewModel: ProductFormViewModel) {
 
+    /*
+    Para não utilizar Stateful -> Stateless, seu Composable deveria receber apenas:
+        -> fun ProductFormScreen(viewModel: ProductFormViewModel, onClick: (Product) -> Unit = {})
+
+    Dentro do Composable você faria essas atribuicoes:
+    -> val onSaveClick = onClick
+    -> val uiState by viewModel.uiState.collectAsState()
+
+    e assim utilizar uiState como seu StateHolder e viewModel: ProductFormViewModel
+
+     */
+
     Column(
         Modifier
             .fillMaxSize()
