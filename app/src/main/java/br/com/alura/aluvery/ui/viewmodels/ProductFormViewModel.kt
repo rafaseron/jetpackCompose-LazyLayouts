@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.update
     for atualizar a instancia de _uiState
     // como no exemplo: _uiState.value = _uiState.value.copy()
  */
-data class ProductFormUiState(var onSaveClick: (Product) -> Unit = {},
-                         var urlImagem: String = "", var nome: String = "", var preco: String = "", var descricao: String = "",
-                         var priceError: Boolean = false) {
+data class ProductFormUiState(val onSaveClick: (Product) -> Unit = {},
+                         val urlImagem: String = "", val nome: String = "", val preco: String = "", val descricao: String = "",
+                         val priceError: Boolean = false) {
 
     //Para Armazenar os Estados do Composable Stateful e conseguir mandar esses Estados
     // atualizados pro Stateless - Estados modificados aqui no StateHolder - , precisamos armazenar
@@ -43,8 +43,7 @@ class ProductFormViewModel(): ViewModel(){
     val uiState = _uiState.asStateFlow()
 
     fun newUrlText(newValue: String){
-        _uiState.value = _uiState.value.copy()
-        urlImagem = newValue
+        _uiState.value = _uiState.value.copy(urlImagem = newValue)
     }
 
 
@@ -55,11 +54,6 @@ class ProductFormViewModel(): ViewModel(){
     /*
     fun urlIsBlank():Boolean{
         return urlImagem.isBlank()
-    }
-
-    fun newUrlText(newValue: String){
-        urlImagem = newValue
-        Log.d("ProductFormUiState", "novo url imagem: $urlImagem")
     }
 
     fun newNameText(newValue: String){
