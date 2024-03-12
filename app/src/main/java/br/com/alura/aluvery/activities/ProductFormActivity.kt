@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,14 +34,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.alura.aluvery.model.Product
-import br.com.alura.aluvery.sampledata.addedProducts
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import coil.compose.AsyncImage
 import java.lang.NumberFormatException
 import java.math.BigDecimal
 import br.com.alura.aluvery.R
 import br.com.alura.aluvery.dao.ProductDao
-import br.com.alura.aluvery.sampledata.todosProdutos
 import br.com.alura.aluvery.ui.viewmodels.ProductFormViewModel
 import br.com.alura.aluvery.ui.viewmodels.ProductFormUiState
 
@@ -55,7 +54,10 @@ class ProductFormActivity: ComponentActivity() {
         setContent(){
             AluveryTheme {
                 Surface {
-                    ProductFormScreen(viewModel = ProductFormViewModel(), onSaveClick = { p ->
+                    val viewModel: ProductFormViewModel by viewModels()
+                    //ViewModel dessa forma vincula-se ao ciclo de vida da Activity ou Fragment (controladores e UI)
+
+                    ProductFormScreen(viewModel = viewModel, onSaveClick = { p ->
                         dao.save(p)
                         finish()
                     })
