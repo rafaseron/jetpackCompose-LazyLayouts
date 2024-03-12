@@ -39,6 +39,26 @@ class ProductFormViewModel(): ViewModel(){
     private val _uiState: MutableStateFlow<ProductFormUiState> = MutableStateFlow(ProductFormUiState())
     val uiState = _uiState.asStateFlow()
 
+    fun onSaveClick(product: Product){
+        _uiState.value.onSaveClick(product)
+    }
+
+    //fun onClickSave
+    /*
+    fun onClickSave(){
+        val state = _uiState.value
+        val produto = Product(
+            urlImagem = state.urlImagem,
+            nome = state.nome,
+            preco = state.preco,
+            descricao = state.descricao
+        )
+        _uiState.value = state.copy(urlImagem = "", nome = "", preco = "", descricao = "")
+        _uiState.value.onSaveClick(produto)
+    }
+     */
+
+
     fun newUrlText(newValue: String){
         _uiState.value = _uiState.value.copy(urlImagem = newValue)
     }
