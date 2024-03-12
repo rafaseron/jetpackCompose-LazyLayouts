@@ -30,6 +30,16 @@ class HomeScreenViewModel: ViewModel(){
     //caso alterarmos a instancia, perderiamos qualquer Estado ali contido
     val uiState = _uiState.asStateFlow()
 
+    /*  Esse método tem o mesmo efeito da utilizacao do .update abaixo.
+    Os dois criam uma copia da instancia atual, modificam a copia e atribuem-a como um novo valor de _uiState
+    Ou seja, em termos de eficiencia, tu pode utilizar os dois.
+
+    fun onSearchChange(novoValor: String){
+        _uiState.value = _uiState.value.copy(texto = novoValor,
+            produtosPesquisados = searchedProducts(novoValor))
+    }
+     */
+
     init {
         _uiState.update {
             state ->
