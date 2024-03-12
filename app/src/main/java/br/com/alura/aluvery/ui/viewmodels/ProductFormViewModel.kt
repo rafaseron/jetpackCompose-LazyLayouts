@@ -33,6 +33,18 @@ data class ProductFormUiState(val onSaveClick: (Product) -> Unit = {},
     var descricao by mutableStateOf(discription)
     var priceError by mutableStateOf(erroNoPreco) */
 
+    fun urlIsBlank():Boolean{
+        return urlImagem.isBlank()
+    }
+
+    fun nameIsBlank(): Boolean{
+        return nome.isBlank()
+    }
+
+    fun priceIsBlank(): Boolean{
+        return preco.isBlank()
+    }
+
 }
 
 
@@ -46,40 +58,20 @@ class ProductFormViewModel(): ViewModel(){
         _uiState.value = _uiState.value.copy(urlImagem = newValue)
     }
 
-
-
-
-//Funcoes para serem utilizadas nas atribuicoes
-
-    /*
-    fun urlIsBlank():Boolean{
-        return urlImagem.isBlank()
-    }
-
     fun newNameText(newValue: String){
-        nome = newValue
-    }
-
-    fun nameIsBlank(): Boolean{
-        return nome.isBlank()
+        _uiState.value = _uiState.value.copy(nome = newValue)
     }
 
     fun newPriceText(newValue: String){
-        preco = newValue
+        _uiState.value = _uiState.value.copy(preco = newValue)
     }
 
-    fun priceIsBlank(): Boolean{
-        return preco.isBlank()
-    }
     fun isPriceError(newValue: Boolean){
-        priceError = newValue
+        _uiState.value = _uiState.value.copy(priceError = newValue)
     }
 
     fun novaDescricao(newValue: String){
-        descricao = newValue
+        _uiState.value = _uiState.value.copy(descricao = newValue)
     }
-
-
-     */
 
 }
