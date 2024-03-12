@@ -49,10 +49,12 @@ class ProductFormActivity: ComponentActivity() {
                     //ViewModel dessa forma vincula-se ao ciclo de vida da Activity ou Fragment (controladores e UI)
 
 
+                    //PARA DAR FINISH NA ACTIVITY, DA PRA FAZER OBSERVANDO UMA MUDANCA DE EVENTO:
                     /*  utilizando o collect para observar se o Produto foi salvo
                         como .collect é uma Coroutine, então está dentro do lifecycleScope para possa ser
                         executada e ficara sendo observado
                      */
+                    /*
                     lifecycleScope.launchWhenStarted {
                         viewModel.finishedEvent.collect { eventoFinalizado ->
                             if (eventoFinalizado) {
@@ -61,9 +63,11 @@ class ProductFormActivity: ComponentActivity() {
                             }
                         }
                     }
+                    */
 
-                    ProductFormScreen(viewModel = viewModel)
-                    //onSaveClick = { p -> dao.save(p) finish()}
+                    //OU MAIS SIMPLES AINDA: SÓ MANDAR UMA FUNCAO COMO PARAMETRO (COM UM FINISH DENTRO,
+                    // E EXECUTA-LA EM UM CLICK DE BOTAO OU ALGO DO TIPO
+                    ProductFormScreen(viewModel = viewModel, afterClickSave = { finish() })
                 }
             }
         }
@@ -72,16 +76,16 @@ class ProductFormActivity: ComponentActivity() {
 
 //STATEFUL COMPOSABLE
 @Composable
-fun ProductFormScreen(viewModel: ProductFormViewModel) {
+fun ProductFormScreen(viewModel: ProductFormViewModel, afterClickSave:() -> Unit = {}) {
 
     val state by viewModel.uiState.collectAsState()
 
-    ProductFormScreen(stateHolder = state, viewModel = viewModel)
+    ProductFormScreen(stateHolder = state, viewModel = viewModel, afterClickSave = afterClickSave)
 }
 
 //STATELESS COMPOSABLE
 @Composable
-fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormViewModel) {
+fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormViewModel, afterClickSave:() -> Unit = {}) {
 
     /*
     Para não utilizar Stateful -> Stateless, seu Composable deveria receber apenas:
@@ -169,7 +173,8 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormVie
                 capitalization = KeyboardCapitalization.Sentences)
         )
 
-        Button(onClick = { viewModel.productConverter() },
+        Button(onClick = { viewModel.productConverter()
+                         afterClickSave()},
             modifier = Modifier
                 .padding(
                     start = 16.dp,
