@@ -20,6 +20,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,7 @@ import br.com.alura.aluvery.R
 import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.sampledata.todosProdutos
 import br.com.alura.aluvery.ui.state.ProductFormUiState
+import br.com.alura.aluvery.ui.viewmodels.ProductFormViewModel
 
 class ProductFormActivity: ComponentActivity() {
 
@@ -57,7 +59,7 @@ class ProductFormActivity: ComponentActivity() {
         setContent(){
             AluveryTheme {
                 Surface {
-                    ProductFormScreen(onClick = {p ->
+                    ProductFormScreen(viewModel = ProductFormViewModel() , onClick = {p ->
                         dao.save(p)
                         finish()
                     })
@@ -69,7 +71,7 @@ class ProductFormActivity: ComponentActivity() {
 
 //STATEFUL COMPOSABLE
 @Composable
-fun ProductFormScreen(onClick: (Product) -> Unit = {}) {
+fun ProductFormScreen(onClick: (Product) -> Unit = {}, viewModel: ProductFormViewModel) {
     val onSaveClick = onClick
 
     val urlImagem by rememberSaveable { mutableStateOf("") }
@@ -88,12 +90,15 @@ fun ProductFormScreen(onClick: (Product) -> Unit = {}) {
             erroNoPreco = priceError)
     }
 
-    ProductFormScreen(stateHolder = state)
+    val estado by viewModel.uiState.collectAsState()
+
+    ProductFormScreen(stateHolder = state, newStateHolder = estado, viewModel = viewModel)
 }
 
 //STATELESS COMPOSABLE
 @Composable
-fun ProductFormScreen(stateHolder: ProductFormUiState) {
+fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.alura.aluvery.ui.viewmodels.ProductFormUiState,
+                      viewModel: ProductFormViewModel) {
 
     Column(
         Modifier
@@ -105,8 +110,8 @@ fun ProductFormScreen(stateHolder: ProductFormUiState) {
             fontSize = 28.sp,
             modifier = Modifier.padding(start = 16.dp, top = 16.dp))
 
-        if (stateHolder.urlIsBlank()){} else{
-            AsyncImage(model = stateHolder.urlImagem, contentDescription = null, modifier = Modifier
+        if (newStateHolder.urlIsBlank()){} else{
+            AsyncImage(model = newStateHolder.urlImagem, contentDescription = null, modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
                 .padding(start = 16.dp, end = 16.dp), contentScale = ContentScale.Fit,
@@ -114,8 +119,8 @@ fun ProductFormScreen(stateHolder: ProductFormUiState) {
                 placeholder = painterResource(id = R.drawable.placeholder))
         }
 
-        OutlinedTextField(value = stateHolder.urlImagem, onValueChange = {newValue ->
-            stateHolder.newUrlText(newValue) },
+        OutlinedTextField(value = newStateHolder.urlImagem, onValueChange = {newValue ->
+            viewModel.newUrlText(newValue) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
@@ -187,7 +192,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState) {
             else{
                 val addProduct = Product(name = stateHolder.nome,
                     price = convertedPrice,
-                    image = stateHolder.urlImagem,
+                    image = newStateHolder.urlImagem,
                     description = stateHolder.descricao)
                 //de acordo com mudancas no codigo do app pela Alura -> fará por DAO
                 //addedProducts.add(addProduct)
@@ -215,7 +220,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState) {
 fun ProductFormScreenPreview() {
     AluveryTheme {
         Surface {
-            ProductFormScreen(onClick = {})
+            //ProductFormScreen(onClick = {})
         }
     }
 }
