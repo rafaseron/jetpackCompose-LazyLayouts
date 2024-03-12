@@ -45,8 +45,8 @@ import java.math.BigDecimal
 import br.com.alura.aluvery.R
 import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.sampledata.todosProdutos
-import br.com.alura.aluvery.ui.state.ProductFormUiState
 import br.com.alura.aluvery.ui.viewmodels.ProductFormViewModel
+import br.com.alura.aluvery.ui.viewmodels.ProductFormUiState
 
 class ProductFormActivity: ComponentActivity() {
 
@@ -74,7 +74,7 @@ class ProductFormActivity: ComponentActivity() {
 fun ProductFormScreen(onClick: (Product) -> Unit = {}, viewModel: ProductFormViewModel) {
     val onSaveClick = onClick
 
-    val urlImagem by rememberSaveable { mutableStateOf("") }
+    /*val urlImagem by rememberSaveable { mutableStateOf("") }
     val nome by rememberSaveable { mutableStateOf("") }
     val preco by rememberSaveable { mutableStateOf("") }
     val descricao by rememberSaveable { mutableStateOf("") }
@@ -88,17 +88,17 @@ fun ProductFormScreen(onClick: (Product) -> Unit = {}, viewModel: ProductFormVie
             price = preco,
             discription = descricao,
             erroNoPreco = priceError)
-    }
+    }*/
 
-    val estado by viewModel.uiState.collectAsState()
+    val state by viewModel.uiState.collectAsState()
 
-    ProductFormScreen(stateHolder = state, newStateHolder = estado, viewModel = viewModel)
+    ProductFormScreen(stateHolder = state, viewModel = viewModel, onClick = onSaveClick)
 }
 
 //STATELESS COMPOSABLE
 @Composable
-fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.alura.aluvery.ui.viewmodels.ProductFormUiState,
-                      viewModel: ProductFormViewModel) {
+fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormViewModel, onClick: (Product) -> Unit = {}) {
+    val onSaveClick = onClick
 
     /*
     Para não utilizar Stateful -> Stateless, seu Composable deveria receber apenas:
@@ -122,8 +122,8 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.al
             fontSize = 28.sp,
             modifier = Modifier.padding(start = 16.dp, top = 16.dp))
 
-        if (newStateHolder.urlIsBlank()){} else{
-            AsyncImage(model = newStateHolder.urlImagem, contentDescription = null, modifier = Modifier
+        if (stateHolder.urlIsBlank()){} else{
+            AsyncImage(model = stateHolder.urlImagem, contentDescription = null, modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
                 .padding(start = 16.dp, end = 16.dp), contentScale = ContentScale.Fit,
@@ -131,7 +131,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.al
                 placeholder = painterResource(id = R.drawable.placeholder))
         }
 
-        OutlinedTextField(value = newStateHolder.urlImagem, onValueChange = {newValue ->
+        OutlinedTextField(value = stateHolder.urlImagem, onValueChange = {newValue ->
             viewModel.newUrlText(newValue) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
@@ -144,7 +144,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.al
         )
 
         OutlinedTextField(value = stateHolder.nome, onValueChange = {newValue ->
-            stateHolder.newNameText(newValue) },
+            viewModel.newNameText(newValue) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
@@ -161,9 +161,9 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.al
                 BigDecimal(newValue.replace(",", "."))
             } catch (e: NumberFormatException){
                 BigDecimal.ZERO
-            stateHolder.isPriceError(true)
+            viewModel.isPriceError(true)
             }
-            stateHolder.newPriceText(convertedValue.toString()) },
+            viewModel.newPriceText(convertedValue.toString()) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
@@ -179,7 +179,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.al
         }else{}
 
         OutlinedTextField(value = stateHolder.descricao, onValueChange = {newValue ->
-            stateHolder.novaDescricao(newValue) },
+            viewModel.novaDescricao(newValue) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
@@ -204,15 +204,16 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, newStateHolder: br.com.al
             else{
                 val addProduct = Product(name = stateHolder.nome,
                     price = convertedPrice,
-                    image = newStateHolder.urlImagem,
+                    image = stateHolder.urlImagem,
                     description = stateHolder.descricao)
                 //de acordo com mudancas no codigo do app pela Alura -> fará por DAO
                 //addedProducts.add(addProduct)
                 //todosProdutos.add(addProduct)
-                stateHolder.onSaveClick(addProduct)
+                viewModel.onSaveClick(addProduct)
                 Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
                 Log.e("ProductFormActivity", "addedProducts -> $addedProducts")
-                Log.e("ProductFormActivity", "todosProdutos -> $todosProdutos")}
+                Log.e("ProductFormActivity", "todosProdutos -> $todosProdutos")
+                Log.e("ProductFormActivity", "DaoList -> ${ProductDao().listProducts()}")}
                          },
             modifier = Modifier
                 .padding(
