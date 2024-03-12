@@ -17,12 +17,9 @@ import androidx.compose.ui.res.painterResource
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
-import br.com.alura.aluvery.dao.ProductDao
-import br.com.alura.aluvery.ui.state.HomeScreenUiState
 import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
-    private val dao = ProductDao()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
