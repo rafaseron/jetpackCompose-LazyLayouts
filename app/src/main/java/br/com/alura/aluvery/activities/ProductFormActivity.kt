@@ -1,7 +1,6 @@
 package br.com.alura.aluvery.activities
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -37,14 +36,13 @@ import androidx.lifecycle.lifecycleScope
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import coil.compose.AsyncImage
 import br.com.alura.aluvery.R
-import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.ui.viewmodels.ProductFormViewModel
 import br.com.alura.aluvery.ui.viewmodels.ProductFormUiState
 
 class ProductFormActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent(){
+        setContent{
             AluveryTheme {
                 Surface {
                     val viewModel: ProductFormViewModel by viewModels()
@@ -107,7 +105,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormVie
             fontSize = 28.sp,
             modifier = Modifier.padding(start = 16.dp, top = 16.dp))
 
-        if (stateHolder.urlIsBlank()){} else{
+        if (!stateHolder.urlIsBlank()){
             AsyncImage(model = stateHolder.urlImagem, contentDescription = null, modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
@@ -155,7 +153,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormVie
             Text(text = "Preço deve ser em decimal", color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp))
-        }else{}
+        }
 
         OutlinedTextField(value = stateHolder.descricao, onValueChange = {newValue ->
             viewModel.novaDescricao(newValue) },
