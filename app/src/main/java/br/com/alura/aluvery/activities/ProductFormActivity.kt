@@ -33,22 +33,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.alura.aluvery.model.Product
+import androidx.lifecycle.lifecycleScope
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import coil.compose.AsyncImage
-import java.lang.NumberFormatException
-import java.math.BigDecimal
 import br.com.alura.aluvery.R
 import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.ui.viewmodels.ProductFormViewModel
 import br.com.alura.aluvery.ui.viewmodels.ProductFormUiState
 
 class ProductFormActivity: ComponentActivity() {
-
-    private val dao = ProductDao()
-    //val stateHolder by mutableStateOf(ProductFormUiState())
-    //DESSA FORMA ACIMA, MANTEMOS O ESTADO DO STATE HOLDER DENTRO DA ACTIVITY
-    //ISSO PROTEGE O ESTADO EM RECOMPOSICOES E RECRIACOES DE TELA
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent(){
@@ -57,10 +50,22 @@ class ProductFormActivity: ComponentActivity() {
                     val viewModel: ProductFormViewModel by viewModels()
                     //ViewModel dessa forma vincula-se ao ciclo de vida da Activity ou Fragment (controladores e UI)
 
-                    ProductFormScreen(viewModel = viewModel, onSaveClick = { p ->
-                        dao.save(p)
-                        finish()
-                    })
+
+                    /*  utilizando o collect para observar se o Produto foi salvo
+                        como .collect é uma Coroutine, então está dentro do lifecycleScope para possa ser
+                        executada e ficara sendo observado
+                     */
+                    lifecycleScope.launchWhenStarted {
+                        viewModel.finishedEvent.collect { eventoFinalizado ->
+                            if (eventoFinalizado) {
+                                finish()
+                                viewModel.finishedEvent.value = false
+                            }
+                        }
+                    }
+
+                    ProductFormScreen(viewModel = viewModel)
+                    //onSaveClick = { p -> dao.save(p) finish()}
                 }
             }
         }
@@ -69,32 +74,16 @@ class ProductFormActivity: ComponentActivity() {
 
 //STATEFUL COMPOSABLE
 @Composable
-fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}, viewModel: ProductFormViewModel) {
-
-    /*val urlImagem by rememberSaveable { mutableStateOf("") }
-    val nome by rememberSaveable { mutableStateOf("") }
-    val preco by rememberSaveable { mutableStateOf("") }
-    val descricao by rememberSaveable { mutableStateOf("") }
-    val priceError by rememberSaveable { mutableStateOf(false) }
-
-    val state = remember (urlImagem, nome, preco, descricao, priceError){
-        ProductFormUiState(
-            onSaveClick = onSaveClick,
-            url = urlImagem,
-            name = nome,
-            price = preco,
-            discription = descricao,
-            erroNoPreco = priceError)
-    }*/
+fun ProductFormScreen(viewModel: ProductFormViewModel) {
 
     val state by viewModel.uiState.collectAsState()
 
-    ProductFormScreen(stateHolder = state, viewModel = viewModel, onClick = onSaveClick)
+    ProductFormScreen(stateHolder = state, viewModel = viewModel)
 }
 
 //STATELESS COMPOSABLE
 @Composable
-fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormViewModel, onClick: (Product) -> Unit = {}) {
+fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormViewModel) {
 
     /*
     Para não utilizar Stateful -> Stateless, seu Composable deveria receber apenas:
@@ -182,27 +171,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormVie
                 capitalization = KeyboardCapitalization.Sentences)
         )
 
-        Button(onClick = {
-            //garantir que o price fique em BigDecimal
-            val convertedPrice = try {
-                BigDecimal(stateHolder.preco)
-            }catch (e: NumberFormatException){
-                BigDecimal.ZERO
-            }
-
-            if (stateHolder.nameIsBlank() || stateHolder.priceIsBlank()){}
-            else{
-                val addProduct = Product(name = stateHolder.nome,
-                    price = convertedPrice,
-                    image = stateHolder.urlImagem,
-                    description = stateHolder.descricao)
-                //de acordo com mudancas no codigo do app pela Alura -> fará por DAO
-                //addedProducts.add(addProduct)
-                //todosProdutos.add(addProduct)
-                onClick(addProduct)
-                Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
-                }
-            },
+        Button(onClick = { viewModel.productConverter() },
             modifier = Modifier
                 .padding(
                     start = 16.dp,
