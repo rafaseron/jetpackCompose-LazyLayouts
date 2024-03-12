@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.model.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,9 +17,8 @@ import java.math.BigDecimal
     for atualizar a instancia de _uiState
     // como no exemplo: _uiState.value = _uiState.value.copy()
  */
-data class ProductFormUiState(val onSaveClick: (Product) -> Unit = {},
-                         val urlImagem: String = "", val nome: String = "", val preco: String = "", val descricao: String = "",
-                         val priceError: Boolean = false) {
+data class ProductFormUiState(val urlImagem: String = "", val nome: String = "",
+          val preco: String = "", val descricao: String = "", val priceError: Boolean = false) {
 
     fun urlIsBlank():Boolean{
         return urlImagem.isBlank()
@@ -41,24 +41,22 @@ class ProductFormViewModel(): ViewModel(){
     private val _uiState: MutableStateFlow<ProductFormUiState> = MutableStateFlow(ProductFormUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun onSaveClick(product: Product){
-        _uiState.value.onSaveClick(product)
+    val finishedEvent = MutableStateFlow(false)
+    private fun onSaveClick(product: Product){
+        ProductDao().save(product)
+        finishedEvent.value = true
     }
 
-    //fun onClickSave
-    /*
-    fun onClickSave(){
-        val state = _uiState.value
-        val produto = Product(
-            urlImagem = state.urlImagem,
-            nome = state.nome,
-            preco = state.preco,
-            descricao = state.descricao
-        )
-        _uiState.value = state.copy(urlImagem = "", nome = "", preco = "", descricao = "")
-        _uiState.value.onSaveClick(produto)
+    fun productConverter(){
+        if (uiState.value.nome.isNotBlank() || uiState.value.preco.isNotBlank()){
+            val addProduct = Product(name = uiState.value.nome,
+                price = uiState.value.preco.toBigDecimal(),
+                image = uiState.value.urlImagem,
+                description = uiState.value.descricao)
+
+            onSaveClick(addProduct)
+        }
     }
-     */
 
 
     fun newUrlText(newValue: String){
