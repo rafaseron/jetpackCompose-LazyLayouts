@@ -9,6 +9,8 @@ import br.com.alura.aluvery.model.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.lang.NumberFormatException
+import java.math.BigDecimal
 
 /* o StateHolder obrigatoriamente deve ser uma data class para que voce tenha acesso a .copy quando
     for atualizar a instancia de _uiState
@@ -67,11 +69,20 @@ class ProductFormViewModel(): ViewModel(){
         _uiState.value = _uiState.value.copy(nome = newValue)
     }
 
-    fun newPriceText(newValue: String){
-        _uiState.value = _uiState.value.copy(preco = newValue)
+    fun newPriceText(newValue: String) {
+        val convertedValue = convertToBigDecimal(newValue)
+        _uiState.value = _uiState.value.copy(preco = convertedValue.toString())
     }
 
-    fun isPriceError(newValue: Boolean){
+    private fun convertToBigDecimal(newValue: String): BigDecimal {
+        return try {
+            BigDecimal(newValue.replace(",", "."))
+        } catch (e: NumberFormatException){
+            BigDecimal.ZERO
+        }
+    }
+
+    private fun isPriceError(newValue: Boolean){
         _uiState.value = _uiState.value.copy(priceError = newValue)
     }
 

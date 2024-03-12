@@ -151,13 +151,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormVie
         )
 
         OutlinedTextField(value = stateHolder.preco, onValueChange = {newValue ->
-            val convertedValue = try {
-                BigDecimal(newValue.replace(",", "."))
-            } catch (e: NumberFormatException){
-                BigDecimal.ZERO
-            viewModel.isPriceError(true)
-            }
-            viewModel.newPriceText(convertedValue.toString()) },
+            viewModel.newPriceText(newValue) },
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxWidth(1f)
