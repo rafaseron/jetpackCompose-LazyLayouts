@@ -205,10 +205,8 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormVie
                 //todosProdutos.add(addProduct)
                 onClick(addProduct)
                 Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
-                Log.e("ProductFormActivity", "addedProducts -> $addedProducts")
-                Log.e("ProductFormActivity", "todosProdutos -> $todosProdutos")
-                Log.e("ProductFormActivity", "DaoList -> ${ProductDao().listProducts()}")}
-                         },
+                }
+            },
             modifier = Modifier
                 .padding(
                     start = 16.dp,
