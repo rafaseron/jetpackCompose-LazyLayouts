@@ -1,15 +1,10 @@
 package br.com.alura.aluvery.ui.viewmodels
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.model.Product
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import java.lang.NumberFormatException
 import java.math.BigDecimal
 
@@ -22,7 +17,7 @@ data class ProductFormUiState(val urlImagem: String = "", val nome: String = "",
 
 
 
-class ProductFormViewModel(): ViewModel(){
+class ProductFormViewModel: ViewModel(){
 
     private val _uiState: MutableStateFlow<ProductFormUiState> = MutableStateFlow(ProductFormUiState())
     val uiState = _uiState.asStateFlow()
@@ -55,15 +50,20 @@ class ProductFormViewModel(): ViewModel(){
 
     fun newPriceText(newValue: String) {
         val convertedValue = convertToBigDecimal(newValue)
+
         _uiState.value = _uiState.value.copy(preco = convertedValue.toString())
     }
 
     private fun convertToBigDecimal(newValue: String): BigDecimal {
+
         return try {
             BigDecimal(newValue.replace(",", "."))
         } catch (e: NumberFormatException){
             BigDecimal.ZERO
+        }.also {
+            isPriceError(it == BigDecimal.ZERO)
         }
+
     }
 
     private fun isPriceError(newValue: Boolean){
