@@ -55,7 +55,7 @@ class ProductFormActivity: ComponentActivity() {
         setContent(){
             AluveryTheme {
                 Surface {
-                    ProductFormScreen(viewModel = ProductFormViewModel() , onClick = {p ->
+                    ProductFormScreen(viewModel = ProductFormViewModel(), onSaveClick = { p ->
                         dao.save(p)
                         finish()
                     })
@@ -67,8 +67,7 @@ class ProductFormActivity: ComponentActivity() {
 
 //STATEFUL COMPOSABLE
 @Composable
-fun ProductFormScreen(onClick: (Product) -> Unit = {}, viewModel: ProductFormViewModel) {
-    val onSaveClick = onClick
+fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}, viewModel: ProductFormViewModel) {
 
     /*val urlImagem by rememberSaveable { mutableStateOf("") }
     val nome by rememberSaveable { mutableStateOf("") }
@@ -94,7 +93,6 @@ fun ProductFormScreen(onClick: (Product) -> Unit = {}, viewModel: ProductFormVie
 //STATELESS COMPOSABLE
 @Composable
 fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormViewModel, onClick: (Product) -> Unit = {}) {
-    val onSaveClick = onClick
 
     /*
     Para não utilizar Stateful -> Stateless, seu Composable deveria receber apenas:
@@ -205,7 +203,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormVie
                 //de acordo com mudancas no codigo do app pela Alura -> fará por DAO
                 //addedProducts.add(addProduct)
                 //todosProdutos.add(addProduct)
-                viewModel.onSaveClick(addProduct)
+                onClick(addProduct)
                 Log.e("ProductFormActivity", "Adicionado agora -> $addProduct")
                 Log.e("ProductFormActivity", "addedProducts -> $addedProducts")
                 Log.e("ProductFormActivity", "todosProdutos -> $todosProdutos")
