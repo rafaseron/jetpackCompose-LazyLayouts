@@ -10,7 +10,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class ProductFormUiState(var onSaveClick: (Product) -> Unit = {},
+/* o StateHolder obrigatoriamente deve ser uma data class para que voce tenha acesso a .copy quando
+    for atualizar a instancia de _uiState
+    // como no exemplo: _uiState.value = _uiState.value.copy()
+ */
+data class ProductFormUiState(var onSaveClick: (Product) -> Unit = {},
                          var urlImagem: String = "", var nome: String = "", var preco: String = "", var descricao: String = "",
                          var priceError: Boolean = false) {
 
@@ -29,8 +33,26 @@ class ProductFormUiState(var onSaveClick: (Product) -> Unit = {},
     var descricao by mutableStateOf(discription)
     var priceError by mutableStateOf(erroNoPreco) */
 
+}
 
 
+
+class ProductFormViewModel(): ViewModel(){
+
+    private val _uiState: MutableStateFlow<ProductFormUiState> = MutableStateFlow(ProductFormUiState())
+    val uiState = _uiState.asStateFlow()
+
+    fun newUrlText(newValue: String){
+        _uiState.value = _uiState.value.copy()
+        urlImagem = newValue
+    }
+
+
+
+
+//Funcoes para serem utilizadas nas atribuicoes
+
+    /*
     fun urlIsBlank():Boolean{
         return urlImagem.isBlank()
     }
@@ -63,19 +85,7 @@ class ProductFormUiState(var onSaveClick: (Product) -> Unit = {},
         descricao = newValue
     }
 
-}
 
-
-
-class ProductFormViewModel(): ViewModel(){
-
-    private val _uiState: MutableStateFlow<ProductFormUiState> = MutableStateFlow(ProductFormUiState())
-    val uiState = _uiState.asStateFlow()
-
-    init {
-
-    }
-
-
+     */
 
 }
