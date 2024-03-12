@@ -105,7 +105,7 @@ fun ProductFormScreen(stateHolder: ProductFormUiState, viewModel: ProductFormVie
             fontSize = 28.sp,
             modifier = Modifier.padding(start = 16.dp, top = 16.dp))
 
-        if (!stateHolder.urlIsBlank()){
+        if (stateHolder.urlImagem.isNotBlank()){
             AsyncImage(model = stateHolder.urlImagem, contentDescription = null, modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)

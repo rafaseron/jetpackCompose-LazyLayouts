@@ -18,21 +18,7 @@ import java.math.BigDecimal
     // como no exemplo: _uiState.value = _uiState.value.copy()
  */
 data class ProductFormUiState(val urlImagem: String = "", val nome: String = "",
-          val preco: String = "", val descricao: String = "", val priceError: Boolean = false) {
-
-    fun urlIsBlank():Boolean{
-        return urlImagem.isBlank()
-    }
-
-    fun nameIsBlank(): Boolean{
-        return nome.isBlank()
-    }
-
-    fun priceIsBlank(): Boolean{
-        return preco.isBlank()
-    }
-
-}
+          val preco: String = "", val descricao: String = "", val priceError: Boolean = false)
 
 
 
