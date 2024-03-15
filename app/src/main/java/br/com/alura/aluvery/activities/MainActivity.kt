@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
             }
 
             App(onFABclick = {
-                navController.navigate(route = "add")
+                navController.navigate(route = "Adicionar")
                 /*startActivity(Intent(this, ProductFormActivity::class.java))*/
                 // Esse exemplo de refatoração para usar o Navigation no lugar de startActivity é para mostrar que o FAB pode:
                 // 1. abrir nova Activity
