@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.ui.components.BottomAppBar
 import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
@@ -43,19 +44,21 @@ class MainActivity : ComponentActivity() {
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
                     val viewModel: HomeScreenViewModel by viewModels()
-                    HomeScreen(viewModel)})
+                    HomeScreen(viewModel)},
+                menuClick = { /*TODO*/ },
+                addClick = { /*TODO*/ })
         }
     }
 }
 @Composable
-fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}) {
+fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, menuClick: () -> Unit = {}, addClick: () -> Unit = {}) {
     AluveryTheme {
         Surface {
             Scaffold(floatingActionButton = {
                 FloatingActionButton(onClick = onFABclick ) {
                     Icon(painter = painterResource(id = R.drawable.baseline_add_24), contentDescription = "add")
                 }
-            }) {paddingValues ->
+            }, bottomBar = { BottomAppBar(menuClick = menuClick, addClick = addClick) }) {paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)){
                     conteudo()
                 }
