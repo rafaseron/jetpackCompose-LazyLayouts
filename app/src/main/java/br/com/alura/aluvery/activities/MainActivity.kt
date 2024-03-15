@@ -33,7 +33,32 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             App(onFABclick = {
-                startActivity(Intent(this, ProductFormActivity::class.java)) },
+                navController.navigate(route = "add")
+                /*startActivity(Intent(this, ProductFormActivity::class.java))*/
+                // Esse exemplo de refatoração para usar o Navigation no lugar de startActivity é para mostrar que o FAB pode:
+                // 1. abrir nova Activity
+                // 2. abrir uma rota de Navegação
+
+                //Caso tu fosse implementar por Navegação, daria para elevar o click do Botao de Salvar do ProductFormScreen para adicionar que depois de Salvar
+                // faria então da Navegação de Volta para por exemplo a rota "menu"
+                // então ficaria:
+                /*
+                    //logica de Save do botão
+                    navContoller.navigate(route = "menu")
+                 */
+
+                // Lembrando que essa rota de navegacao poderia ser recebida pelo ViewModel referente a tela durante instancia do mesmo
+                //Exemplo:
+                /*
+                    val navLogic = navContoller.navigate(route = "menu")
+
+                    val viewModel: HomeScreenViewModel by viewModels()
+                    NavHost(navController, startDestination){
+                      composable("menu") { HomeScreen(viewModel(navLogic)) }
+                    }
+
+                 */
+                             },
                 conteudo = {
 
                     //CASO HAJA RECOMPOSICAO NESSA TELA, DEVE-SE MANDAR O STATE ASSIM:
