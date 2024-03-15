@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
                     val viewModel: HomeScreenViewModel by viewModels()
-                    HomeScreen(viewModel)
+                    //HomeScreen(viewModel)
 
                     val productViewModel: ProductFormViewModel by viewModels()
 
