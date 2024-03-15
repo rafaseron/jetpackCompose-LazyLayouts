@@ -113,6 +113,7 @@ class MainActivity : ComponentActivity() {
                     navItem ->
                     itemSelecionado = navItem.label
                     routeFlow(navItem)
+                    //daria para passar a rota direto com: navControler.navigate(route = navItem.label)
                 }, selecionado = itemSelecionado)
         }
     }
