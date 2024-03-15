@@ -38,6 +38,16 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             var itemSelecionado by remember { mutableStateOf("Menu") }
 
+            fun routeFlow(navItem: NavItem){
+                if (navItem.label == "Menu"){
+                    navController.navigate(route = "menu")
+                }else{
+                    if (navItem.label == "Adicionar Produto"){
+                        navController.navigate(route = "add")
+                    }
+                }
+            }
+
             App(onFABclick = {
                 navController.navigate(route = "add")
                 /*startActivity(Intent(this, ProductFormActivity::class.java))*/
@@ -84,6 +94,7 @@ class MainActivity : ComponentActivity() {
                 itemClick = {
                     navItem ->
                     itemSelecionado = navItem.label
+                    routeFlow(navItem)
                 }, selecionado = itemSelecionado)
         }
     }
