@@ -80,9 +80,16 @@ fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, menu
             }, bottomBar = { BottomAppBar(menuClick = menuClick, addClick = addClick) }) {paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)){
                     conteudo()
-                }
+                    //esse conteudo() refere-se aoo 'restante' do conteudo que estaria aqui inteiro do Corpo do Composable
+                    /*
+                    EXPLICACAO: foi feito isso para que se ele Eleve o conteudo do Corpo do Composable para que possa ser adicionado posteriormente
+                    mais conteudo a este Composable. Neste caso, sua reutilizacao de adicionar novos elementos ao conteudo ja existente
+                    deste Composable 'App()' é feito na MainActivity
 
-            }
-        }
-    }
+                                                                                                                                */
+}
+
+}
+}
+}
 }
