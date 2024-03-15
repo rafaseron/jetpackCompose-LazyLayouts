@@ -12,6 +12,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.compose.NavHost
@@ -21,6 +25,7 @@ import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
 import br.com.alura.aluvery.ui.components.BottomAppBar
+import br.com.alura.aluvery.ui.components.NavItem
 import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
 import br.com.alura.aluvery.ui.viewmodels.ProductFormViewModel
 
@@ -31,6 +36,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val navController = rememberNavController()
+            var itemSelecionado by remember { mutableStateOf("Menu") }
 
             App(onFABclick = {
                 navController.navigate(route = "add")
@@ -75,20 +81,29 @@ class MainActivity : ComponentActivity() {
 
 
                            },
-                menuClick = { navController.navigate("menu") },
-                addClick = { navController.navigate("add") })
+                itemClick = {
+                    navItem ->
+                    itemSelecionado = navItem.label
+                }, selecionado = itemSelecionado)
         }
     }
 }
 @Composable
-fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, menuClick: () -> Unit = {}, addClick: () -> Unit = {}) {
+fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, itemClick:(NavItem) -> Unit = {}, selecionado: String = "") {
+
+    val navList = listOf<NavItem>(
+        NavItem(image = painterResource(id = R.drawable.baseline_restaurant_menu_24), label = "Menu"),
+        NavItem(image = painterResource(id = R.drawable.baseline_library_add_24), label = "Adicionar Produto"),
+        NavItem(image = painterResource(id = R.drawable.baseline_search_24), label = "Search")
+    )
+
     AluveryTheme {
         Surface {
             Scaffold(floatingActionButton = {
                 FloatingActionButton(onClick = onFABclick ) {
                     Icon(painter = painterResource(id = R.drawable.baseline_add_24), contentDescription = "add")
                 }
-            }, bottomBar = { BottomAppBar(menuClick = menuClick, addClick = addClick) }) {paddingValues ->
+            }, bottomBar = { BottomAppBar(navList = navList, itemClick = itemClick, selecionado = selecionado) }) {paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)){
                     conteudo()
                     //esse conteudo() refere-se aoo 'restante' do conteudo que estaria aqui inteiro do Corpo do Composable
