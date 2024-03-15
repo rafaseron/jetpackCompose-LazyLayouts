@@ -26,12 +26,12 @@ fun BottomAppBar(menuClick: () -> Unit = {}, addClick: () -> Unit = {}, selected
                 contentDescription = "Menu",
             )
         }, label = {
-            Text("Home")
+            Text("Menu")
         }, onClick = menuClick, selected = selected)
 
         NavigationBarItem(selected = selected, onClick = addClick, icon = {
             Image(painter = addIcon, contentDescription = null)
-        })
+        }, label = { Text(text = "Adicionar Produto")})
 
 
     }
