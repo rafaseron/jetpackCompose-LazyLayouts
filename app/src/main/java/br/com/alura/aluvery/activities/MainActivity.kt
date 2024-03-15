@@ -1,6 +1,5 @@
 package br.com.alura.aluvery.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -121,7 +120,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, itemClick:(NavItem) -> Unit = {}, selecionado: String = "") {
 
-    val navList = listOf<NavItem>(
+    val navList = listOf(
         NavItem(image = painterResource(id = R.drawable.baseline_restaurant_menu_24), label = "Menu"),
         NavItem(image = painterResource(id = R.drawable.baseline_library_add_24), label = "Adicionar"),
         NavItem(image = painterResource(id = R.drawable.baseline_search_24), label = "Search")
