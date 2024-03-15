@@ -2,6 +2,7 @@ package br.com.alura.aluvery.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
@@ -36,14 +38,30 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val navController = rememberNavController()
-            var itemSelecionado by remember { mutableStateOf("Menu") }
+
+            val currentBackStack by navController.currentBackStackEntryAsState()
+            val currentDestination = currentBackStack?.destination
+
+            var itemSelecionado by remember(currentDestination) {
+
+                val acesso = currentDestination?.let {
+                    p ->
+                    p.route.toString()
+                } ?: "menu"
+
+                Log.e("Acesso", "Acesso -> $acesso")
+
+                mutableStateOf(acesso)
+            }
+
+
 
             fun routeFlow(navItem: NavItem){
                 if (navItem.label == "Menu"){
-                    navController.navigate(route = "menu")
+                    navController.navigate(route = "Menu")
                 }else{
-                    if (navItem.label == "Adicionar Produto"){
-                        navController.navigate(route = "add")
+                    if (navItem.label == "Adicionar"){
+                        navController.navigate(route = "Adicionar")
                     }
                 }
             }
@@ -80,12 +98,12 @@ class MainActivity : ComponentActivity() {
                     val viewModel: HomeScreenViewModel by viewModels()
 
                     val productViewModel: ProductFormViewModel by viewModels()
-                    productViewModel.navLogic = { navController.navigate(route = "menu") }
+                    productViewModel.navLogic = { navController.navigate(route = "Menu") }
                     //adicionando a rota do navLogic ANTES de MANDAR este ViewModel para a referente tela
 
-                    NavHost(navController = navController, startDestination = "menu", builder = {
-                        composable("menu") { HomeScreen(viewModel) }
-                        composable("add") { ProductFormScreen(viewModel = productViewModel) }
+                    NavHost(navController = navController, startDestination = "Menu", builder = {
+                        composable("Menu") { HomeScreen(viewModel) }
+                        composable("Adicionar") { ProductFormScreen(viewModel = productViewModel) }
                     })
 
 
@@ -104,7 +122,7 @@ fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, item
 
     val navList = listOf<NavItem>(
         NavItem(image = painterResource(id = R.drawable.baseline_restaurant_menu_24), label = "Menu"),
-        NavItem(image = painterResource(id = R.drawable.baseline_library_add_24), label = "Adicionar Produto"),
+        NavItem(image = painterResource(id = R.drawable.baseline_library_add_24), label = "Adicionar"),
         NavItem(image = painterResource(id = R.drawable.baseline_search_24), label = "Search")
     )
 
