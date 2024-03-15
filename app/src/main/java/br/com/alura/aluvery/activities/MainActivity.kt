@@ -58,6 +58,10 @@ class MainActivity : ComponentActivity() {
                     }
 
                  */
+
+                //NA REAL ESSA SERIA A IDEIA, MAS É UM POUCO MAIS COMPLEXO QUE ISSO, JÁ QUE VIEWMODEL NAO RECEBE PARAMETROS DIRETAMENTE
+                // POR EXEMPLO, daria para tentar passar o navLogic pro ProductFormUiState, para que o ViewModel pegue de lá
+
                              },
                 conteudo = {
 
