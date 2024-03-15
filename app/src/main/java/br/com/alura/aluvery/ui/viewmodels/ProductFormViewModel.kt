@@ -1,6 +1,7 @@
 package br.com.alura.aluvery.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import br.com.alura.aluvery.dao.ProductDao
 import br.com.alura.aluvery.model.Product
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,14 +18,15 @@ data class ProductFormUiState(val urlImagem: String = "", val nome: String = "",
 
 
 
-class ProductFormViewModel: ViewModel(){
+class ProductFormViewModel(var navLogic: () -> Unit = {}): ViewModel(){
 
     private val _uiState: MutableStateFlow<ProductFormUiState> = MutableStateFlow(ProductFormUiState())
     val uiState = _uiState.asStateFlow()
 
-    val finishedEvent = MutableStateFlow(false)
+    private val finishedEvent = MutableStateFlow(false)
     private fun onSaveClick(product: Product){
         ProductDao().save(product)
+        navLogic()
         finishedEvent.value = true
     }
 

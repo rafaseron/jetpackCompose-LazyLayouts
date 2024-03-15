@@ -39,51 +39,33 @@ class MainActivity : ComponentActivity() {
                 // 1. abrir nova Activity
                 // 2. abrir uma rota de Navegação
 
-                //Caso tu fosse implementar por Navegação, daria para elevar o click do Botao de Salvar do ProductFormScreen para adicionar que depois de Salvar
+                //Caso tu fosse implementar por Navegação, daria para Elevar uma funcao para ser executada pós click do Botao de Salvar do ProductFormScreen
                 // faria então da Navegação de Volta para por exemplo a rota "menu"
-                // então ficaria:
-                /*
-                    //logica de Save do botão
-                    navContoller.navigate(route = "menu")
-                 */
+                //Então no caso, tu tem que passar essa rota diretamente pro ViewModel
 
-                // Lembrando que essa rota de navegacao poderia ser recebida pelo ViewModel referente a tela durante instancia do mesmo
                 //Exemplo:
                 /*
-                    val navLogic = navContoller.navigate(route = "menu")
-
                     val viewModel: HomeScreenViewModel by viewModels()
+                   viewModel.navLogic = { navController.navigate(route = "menu") }  <-- MUDAMOS o valor desta funcao que é recebida por parametros
+                   // ANTES de enviar o mesmo viewModel pro Composable da tela correspondente
+
                     NavHost(navController, startDestination){
-                      composable("menu") { HomeScreen(viewModel(navLogic)) }
+                      composable("menu") { HomeScreen(viewModel) }
                     }
 
                  */
 
-                //NA REAL ESSA SERIA A IDEIA, MAS É UM POUCO MAIS COMPLEXO QUE ISSO, JÁ QUE VIEWMODEL NAO RECEBE PARAMETROS DIRETAMENTE
-                // POR EXEMPLO, daria para tentar passar o navLogic pro ProductFormUiState, para que o ViewModel pegue de lá
+                // LEMBRANDO QUE AGORA O VIEWMODEL DEVE RECEBR NO SEU PARAMETRO: (var navLogic: () -> Unit = {} )
+                // e ai é só ele executar navLogic() quando desejado
 
                              },
                 conteudo = {
 
-                    //CASO HAJA RECOMPOSICAO NESSA TELA, DEVE-SE MANDAR O STATE ASSIM:
-                    /*
-                    state = remember(//parametros a serem lembrados) { HomeScreenUiState() }
-                    Atencao -> se utilizar o remember dessa forma, tem que levar tudo de 'texto' para essa Activity
-                    e passar 'texto' para um dos parametros que serao levados em consideracao no remember
-
-                    Também, deverá ter o Map/Lista aqui dentro dessa Activity e passar para o parametro de remember
-                    (para computar tambem muddancas de lista -> acarretar em mudanca de UI)
-
-                    ai sim, seria só chamar a HomeScreen abaixo dessa forma:
-                    HomeScreen(stateHolder = state)
-
-                    Caso o HomeScreenUiState solicitar parametros, eles sao enviados no remember acima, nos
-                    parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
-                     */
                     val viewModel: HomeScreenViewModel by viewModels()
-                    //HomeScreen(viewModel)
 
                     val productViewModel: ProductFormViewModel by viewModels()
+                    productViewModel.navLogic = { navController.navigate(route = "menu") }
+                    //adicionando a rota do navLogic ANTES de MANDAR este ViewModel para a referente tela
 
                     NavHost(navController = navController, startDestination = "menu", builder = {
                         composable("menu") { HomeScreen(viewModel) }
