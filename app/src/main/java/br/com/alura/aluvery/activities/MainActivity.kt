@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                 val acesso = currentDestination?.let {
                     p ->
                     p.route.toString()
-                } ?: "menu"
+                } ?: "Menu"
 
                 Log.e("Acesso", "Acesso -> $acesso")
 
