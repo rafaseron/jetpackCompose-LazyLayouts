@@ -14,16 +14,24 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
 import br.com.alura.aluvery.ui.components.BottomAppBar
 import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
+import br.com.alura.aluvery.ui.viewmodels.ProductFormViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
+
+            val navController = rememberNavController()
+
             App(onFABclick = {
                 startActivity(Intent(this, ProductFormActivity::class.java)) },
                 conteudo = {
@@ -44,9 +52,20 @@ class MainActivity : ComponentActivity() {
                     parametros do construtor de HomeScreenUiState() que está dentro do remember(){ }
                      */
                     val viewModel: HomeScreenViewModel by viewModels()
-                    HomeScreen(viewModel)},
-                menuClick = { /*TODO*/ },
-                addClick = { /*TODO*/ })
+                    HomeScreen(viewModel)
+
+                    val productViewModel: ProductFormViewModel by viewModels()
+
+                    NavHost(navController = navController, startDestination = "menu", builder = {
+                        composable("menu") { HomeScreen(viewModel) }
+                        composable("add") { ProductFormScreen(viewModel = productViewModel) }
+                    })
+
+
+
+                           },
+                menuClick = { navController.navigate("menu") },
+                addClick = { navController.navigate("add") })
         }
     }
 }
