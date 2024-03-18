@@ -56,12 +56,9 @@ class MainActivity : ComponentActivity() {
 
 
             fun routeFlow(navItem: NavItem){
-                if (navItem.label == "Menu"){
-                    navController.navigate(route = "Menu")
-                }else{
-                    if (navItem.label == "Adicionar"){
-                        navController.navigate(route = "Adicionar")
-                    }
+                navController.navigate(route = navItem.label){
+                    launchSingleTop = true
+                    popUpTo(route = navItem.label)
                 }
             }
 
