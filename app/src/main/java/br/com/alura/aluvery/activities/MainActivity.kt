@@ -54,6 +54,36 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(acesso)
             }
 
+            fun showBottomBar(): Boolean{
+                currentDestination?.let {
+                    p ->
+                    when (p.route.toString()){
+                        "Menu" -> return true
+                        else -> return false
+                    }
+                } ?: return false
+            }
+
+            fun showFAB(): Boolean{
+                currentDestination?.let {
+                        p ->
+                    when (p.route.toString()){
+                        "Menu" -> return true
+                        else -> return false
+                    }
+                } ?: return false
+            }
+
+            fun showTopBar(): Boolean{
+                currentDestination?.let {
+                        p ->
+                    when (p.route.toString()){
+                        "Menu" -> return true
+                        else -> return false
+                    }
+                } ?: return false
+            }
+
 
 
             fun routeFlow(navItem: NavItem){
@@ -63,7 +93,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            App(onFABclick = {
+            App(showBottomBar = showBottomBar(), showFAB = showFAB()/*, showTopBar = showTopBar()*/, onFABclick = {
                 navController.navigate(route = Destination().adicionar.route)
                 /*startActivity(Intent(this, ProductFormActivity::class.java))*/
                 // Esse exemplo de refatoração para usar o Navigation no lugar de startActivity é para mostrar que o FAB pode:
@@ -116,7 +146,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 @Composable
-fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, itemClick:(NavItem) -> Unit = {}, selecionado: String = "") {
+fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, itemClick:(NavItem) -> Unit = {}, selecionado: String = "", showBottomBar: Boolean = false,
+        showFAB: Boolean = false) {
 
     val navList = listOf(
         NavItem(image = painterResource(id = R.drawable.baseline_restaurant_menu_24), label = Destination().menu.route),
@@ -127,10 +158,16 @@ fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, item
     AluveryTheme {
         Surface {
             Scaffold(floatingActionButton = {
-                FloatingActionButton(onClick = onFABclick ) {
-                    Icon(painter = painterResource(id = R.drawable.baseline_add_24), contentDescription = "add")
+                if (showFAB){
+                    FloatingActionButton(onClick = onFABclick ) {
+                        Icon(painter = painterResource(id = R.drawable.baseline_add_24), contentDescription = "add")
+                    }
                 }
-            }, bottomBar = { BottomAppBar(navList = navList, itemClick = itemClick, selecionado = selecionado) }) {paddingValues ->
+            }, bottomBar = { if(showBottomBar) {
+                BottomAppBar(navList = navList, itemClick = itemClick, selecionado = selecionado)
+                    }
+                }
+            ) {paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)){
                     conteudo()
                     //esse conteudo() refere-se aoo 'restante' do conteudo que estaria aqui inteiro do Corpo do Composable
