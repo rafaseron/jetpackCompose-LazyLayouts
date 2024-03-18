@@ -25,7 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
-import br.com.alura.aluvery.navigation.AppDestination
+import br.com.alura.aluvery.navigation.Destination
 import br.com.alura.aluvery.ui.components.BottomAppBar
 import br.com.alura.aluvery.ui.components.NavItem
 import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                 val acesso = currentDestination?.let {
                     p ->
                     p.route.toString()
-                } ?: AppDestination.Menu.route
+                } ?: Destination().menu.route
 
                 Log.e("Acesso", "Acesso -> $acesso")
 
@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
             }
 
             App(onFABclick = {
-                navController.navigate(route = AppDestination.Adicionar.route)
+                navController.navigate(route = Destination().adicionar.route)
                 /*startActivity(Intent(this, ProductFormActivity::class.java))*/
                 // Esse exemplo de refatoração para usar o Navigation no lugar de startActivity é para mostrar que o FAB pode:
                 // 1. abrir nova Activity
@@ -98,9 +98,9 @@ class MainActivity : ComponentActivity() {
                     productViewModel.navLogic = { navController.navigate(route = "Menu") }
                     //adicionando a rota do navLogic ANTES de MANDAR este ViewModel para a referente tela
 
-                    NavHost(navController = navController, startDestination = AppDestination.Menu.route, builder = {
-                        composable(AppDestination.Menu.route) { HomeScreen(viewModel) }
-                        composable(AppDestination.Adicionar.route) { ProductFormScreen(viewModel = productViewModel) }
+                    NavHost(navController = navController, startDestination = Destination().menu.route, builder = {
+                        composable(Destination().menu.route) { HomeScreen(viewModel) }
+                        composable(Destination().adicionar.route) { ProductFormScreen(viewModel = productViewModel) }
                     })
 
 
