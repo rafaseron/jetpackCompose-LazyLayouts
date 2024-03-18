@@ -95,7 +95,7 @@ class MainActivity : ComponentActivity() {
                     val viewModel: HomeScreenViewModel by viewModels()
 
                     val productViewModel: ProductFormViewModel by viewModels()
-                    productViewModel.navLogic = { navController.navigate(route = "Menu") }
+                    productViewModel.navLogic = { navController.navigate(route = Destination().menu.route) }
                     //adicionando a rota do navLogic ANTES de MANDAR este ViewModel para a referente tela
 
                     NavHost(navController = navController, startDestination = Destination().menu.route, builder = {
@@ -119,8 +119,8 @@ class MainActivity : ComponentActivity() {
 fun App(onFABclick: () -> Unit = {}, conteudo: @Composable () -> Unit = {}, itemClick:(NavItem) -> Unit = {}, selecionado: String = "") {
 
     val navList = listOf(
-        NavItem(image = painterResource(id = R.drawable.baseline_restaurant_menu_24), label = "Menu"),
-        NavItem(image = painterResource(id = R.drawable.baseline_library_add_24), label = "Adicionar"),
+        NavItem(image = painterResource(id = R.drawable.baseline_restaurant_menu_24), label = Destination().menu.route),
+        NavItem(image = painterResource(id = R.drawable.baseline_library_add_24), label = Destination().adicionar.route),
         NavItem(image = painterResource(id = R.drawable.baseline_search_24), label = "Search")
     )
 
