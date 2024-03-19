@@ -5,6 +5,7 @@ data class RouteShape (val route: String)
 class Destination{
     val menu = RouteShape(route = "Menu")
     val adicionar = RouteShape(route = "Adicionar")
+    val detailedProduct = RouteShape(route = "Detailed")
 }
 
 /*

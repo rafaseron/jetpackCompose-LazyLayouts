@@ -12,6 +12,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,11 +26,15 @@ import androidx.navigation.compose.rememberNavController
 import br.com.alura.aluvery.ui.screens.HomeScreen
 import br.com.alura.aluvery.ui.theme.AluveryTheme
 import br.com.alura.aluvery.R
+import br.com.alura.aluvery.dao.ProductDao
+import br.com.alura.aluvery.model.Product
 import br.com.alura.aluvery.navigation.Destination
 import br.com.alura.aluvery.ui.components.BottomAppBar
 import br.com.alura.aluvery.ui.components.NavItem
 import br.com.alura.aluvery.ui.viewmodels.HomeScreenViewModel
 import br.com.alura.aluvery.ui.viewmodels.ProductFormViewModel
+import br.com.alura.aluvery.ui.screens.DetailedProduct
+import kotlinx.coroutines.flow.StateFlow
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +98,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
+            fun listReturn(list: StateFlow<List<Product>>): List<Product>{
+                return list.value
+            }
+
             App(showBottomBar = showBottomBar(), showFAB = showFAB()/*, showTopBar = showTopBar()*/, onFABclick = {
                 navController.navigate(route = Destination().adicionar.route)
                 /*startActivity(Intent(this, ProductFormActivity::class.java))*/
@@ -131,6 +140,18 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = Destination().menu.route, builder = {
                         composable(Destination().menu.route) { HomeScreen(viewModel) }
                         composable(Destination().adicionar.route) { ProductFormScreen(viewModel = productViewModel) }
+                        composable("${Destination().detailedProduct.route}/{productId}") {
+                            val id = it.arguments?.getString("productId")
+
+                            val listProducts = listReturn(ProductDao().listProducts()) //funcao para tratar a lista de StateFlow<List<Product>> para List<Product>
+                            listProducts.find {
+                                    p ->
+                                p.iD == id
+                            }?.let {
+                                    product ->
+                                DetailedProduct(product = product) } ?: navController.popBackStack() //caso o productId nao exista, ele retorna para tela anterior
+                        }
+
                     })
 
 
